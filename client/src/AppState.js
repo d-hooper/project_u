@@ -7,6 +7,7 @@ export const AppState = reactive({
   /** @type {import('./models/Account.js').Account} user info from the database*/
   account: null,
   /** @type {import('./models/Meal.js').Meal[]} user info from the database*/
-  searchedFoods: []
+  searchedFoods: [],
+  activeFood: null
 })
 

@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import NutritionInfoModal from '@/components/NutritionInfoModal.vue';
 import SearchedFood from '@/components/SearchedFood.vue';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
@@ -11,6 +12,7 @@ const foods = computed(() => AppState.searchedFoods)
 
 // onMounted(() => {
 // })
+// NOTE we could later have a function run onMounted to get most recent searches/previously used foods
 
 async function getFoodItemsByQuery() {
   try {
@@ -48,7 +50,7 @@ async function getFoodItemsByQuery() {
       </div>
     </div>
   </section>
-
+  <NutritionInfoModal />
 </template>
 
 <style scoped lang="scss">

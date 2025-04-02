@@ -19,3 +19,12 @@ export class Meal {
     return this.imageBaseUrl + '_500x500/' + this.image
   }
 }
+
+export class ActiveMeal extends Meal {
+  constructor(data) {
+    super(data)
+    this.category = data.categoryPath
+    this.calories = data.nutrition.nutrients.find(object => object.name == 'Calories')
+
+  }
+}
