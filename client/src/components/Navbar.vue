@@ -21,11 +21,11 @@ watch(theme, () => {
     <div class="container gap-2">
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
         <img class="navbar-brand" alt="logo" src="/img/cw-logo.png" height="45" />
-        <b class="fs-5">Vue Starter</b>
+        <b class="fs-5">Project U</b>
       </RouterLink>
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
-        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="mdi mdi-menu text-light"></span>
       </button>
       <!-- collapsing menu -->
@@ -40,7 +40,7 @@ watch(theme, () => {
         <!-- LOGIN COMPONENT HERE -->
         <div class="ms-auto">
           <button class="btn text-light" @click="toggleTheme"
-            :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
+                  :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
             <i v-if="theme == 'dark'" class="mdi mdi-weather-sunny"></i>
             <i v-if="theme == 'light'" class="mdi mdi-weather-night"></i>
           </button>
