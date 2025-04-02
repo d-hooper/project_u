@@ -29,23 +29,38 @@ async function getFoodItemsByQuery() {
   <section class="container">
     <div class="row">
       <div class="col-12">
-        <form @submit.prevent="getFoodItemsByQuery()">
-          <div class="form-floating mb-3">
-            <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput"
-                   placeholder="name@example.com">
-            <label for="floatingInput">Search for food</label>
-          </div>
-        </form>
+        <div class="form-area my-3 d-flex align-items-center rounded">
+          <form @submit.prevent="getFoodItemsByQuery()" class="mx-3 w-100">
+            <div class="form-floating mb-3">
+              <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput"
+                     placeholder="name@example.com">
+              <label for="floatingInput">Search for food</label>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
   <section class="container">
     <div class="row">
-      <div v-for="food in foods" :key="food.id" class="col-md-4">
+      <div v-for="food in foods" :key="food.id" class="col-md-4 col-lg-3">
         <SearchedFood :food="food" />
       </div>
     </div>
   </section>
+
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.form-area {
+  min-height: 25dvh;
+  width: 100%;
+  background-image: url('https://images.unsplash.com/photo-1479150928156-423a69d91fe0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: 15% 85%;
+}
+
+input {
+  width: 100%;
+}
+</style>

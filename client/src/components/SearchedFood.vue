@@ -8,15 +8,22 @@ defineProps({
 
 
 <template>
-  <div class="card">
+  <div class="card mb-3 d-flex flex-column align-items-center">
     <div>
-      <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`">
+      <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="food-search-img" role="button">
     </div>
     <div>
-      <p class="mb-0">{{ food.name }}</p>
+      <p class="mb-0 text-capitalize">{{ food.name }}</p>
     </div>
   </div>
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.food-search-img {
+  height: 25dvh;
+  aspect-ratio: 1/1;
+  object-position: center;
+  object-fit: contain;
+}
+</style>
