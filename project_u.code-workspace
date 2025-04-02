@@ -8,5 +8,6 @@
       "name": "server",
       "path": "server"
     }
-  ]
+  ],
+  "settings": {}
 }
