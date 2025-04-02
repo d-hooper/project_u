@@ -8,7 +8,7 @@ export class DaysController extends BaseController {
     super('day')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.createDay)
+      .get('', this.getOrCreateDay)
       .get('/:dayId', this.getTodaysDetails)
       // .put('/:dayId', this.updateCalorieGoal)
   }
@@ -22,19 +22,22 @@ export class DaysController extends BaseController {
       next(error)
     }
   }
-  async createDay(request, response, next) {
+  
+  async getDayByCalendarDate(request, response, next) {
     try {
-      const userId = request.userInfo.id
+      const day = await daysService.getDayByCalendarDate()
+      response.send(day)
+    } catch (error) {
+      next(error)
+    }
+  }
 
-      const whichDay = {
-        goalMet: false,
-        mealsEaten: [],
-        exercisesSaved: [],
-        journalBody: null,
-        mood: 1,
-        accountId: userId
-      }
-      const day = await daysService.createDay(whichDay)
+
+  
+  async getOrCreateDay(request, response, next) {
+    try {
+      const userInfo = request.userInfo
+      const day = await daysService.getOrCreateDay(userInfo)
       response.send(day)
     } catch (error) {
       next(error)
