@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    image: your-dockerhub-username/project_u:latest
+    restart: unless-stopped
+    env_file:
+      - project_u-env
+    ports:
+      - "3000:3000"
