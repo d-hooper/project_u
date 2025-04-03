@@ -7,7 +7,6 @@ export const DaySchema = new Schema(
     // NOTE compute on client instead
     // goalMet: { type: Boolean, default: false, required: true },
 
-    mealsEaten: [{ type: Schema.ObjectId, required: true, ref: 'Meal' }],
     exercisesSaved: [{ type: Schema.ObjectId, required: true, ref: 'Exercise' }],
 
     accountId: { type: Schema.ObjectId, required: true },
@@ -17,7 +16,17 @@ export const DaySchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
-DaySchema.virtual('account', { localField: 'accountId', foreignField: '_id', justOne: true, ref: 'Account' }
-
+DaySchema.virtual('account', {
+  localField: 'accountId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Account'
+}
 )
 
+DaySchema.virtual('mealDays', {
+  localField: "_id",
+  foreignField: "dayId",
+  ref: "MealDay",
+  justOne: false
+})

@@ -33,12 +33,18 @@ class DaysService {
       },
       accountId: userInfo.id
     })
+      .populate({
+        path: "mealDays",
+        populate: {
+          path: "meal"
+        }
+
+      })
     return day
   }
 
   async getDayById(dayId) {
-    const day = await dbContext.Day.findById(dayId)
-    await day.populate('meals')
+    const day = await dbContext.Day.findById(dayId).populate('mealDays')
     return day
   }
 
@@ -54,8 +60,7 @@ class DaysService {
     if (day.accountId != userInfo.id) {
       throw new Forbidden(`Cannot update day information for other users ${userInfo.nickname}`.toUpperCase())
     }
-    day.mealsEaten = dayData.mealsEaten ?? day.mealsEaten
-    day.exercisesSaved = dayData.exercisesSaved ?? day.exercisesSaved
+
     day.calorieGoal = dayData.calorieGoal ?? day.calorieGoal
 
     await day.save()

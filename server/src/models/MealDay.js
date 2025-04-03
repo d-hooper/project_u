@@ -9,7 +9,7 @@ export const MealDaySchema = new Schema({
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
-MealDaySchema.virtual('meals',
+MealDaySchema.virtual('meal',
   {
     localField: 'mealId',
     foreignField: '_id',
