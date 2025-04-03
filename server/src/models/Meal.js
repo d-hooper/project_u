@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 export const MealSchema = new Schema(
   {
     id: { type: Schema.ObjectId, required: true },
-    fatSecretMealId: { type: Number, required: true },
+    spoonacularMealId: { type: String, required: true },
     name: { type: String, required: true },
     image: { type: String, required: true },
     calorieCount: { type: Number, required: true },
@@ -11,3 +11,5 @@ export const MealSchema = new Schema(
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
+
+

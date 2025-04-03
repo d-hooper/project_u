@@ -6,10 +6,12 @@ export const DaySchema = new Schema(
     calorieGoal: { type: Number, min: 100, max: 7000, required: true },
     // NOTE compute on client instead
     // goalMet: { type: Boolean, default: false, required: true },
-    mealsEaten: [{ type: Schema.ObjectId, required: true }],
-    exercisesSaved: [{ type: Schema.ObjectId, required: true }],
+
+    mealsEaten: [{ type: Schema.ObjectId, required: true, ref: 'Meal' }],
+    exercisesSaved: [{ type: Schema.ObjectId, required: true, ref: 'Exercise' }],
+
     accountId: { type: Schema.ObjectId, required: true },
-    journalBody: { type: String, minLength: 3, maxLength: 500, required: false},
+    journalBody: { type: String, minLength: 3, maxLength: 500, required: false },
     mood: { type: Number, min: 0, max: 10, required: false, default: 0 }
   },
   { timestamps: true, toJSON: { virtuals: true } }
@@ -18,3 +20,4 @@ export const DaySchema = new Schema(
 DaySchema.virtual('account', { localField: 'accountId', foreignField: '_id', justOne: true, ref: 'Account' }
 
 )
+

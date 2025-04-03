@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 import { accountService } from "./AccountService.js"
 
 class DaysService {
@@ -35,14 +36,29 @@ class DaysService {
     return day
   }
 
-  async getTodaysDetails(dayId) {
-
+  async getDayById(dayId) {
     const day = await dbContext.Day.findById(dayId)
+    await day.populate('meals')
     return day
   }
+
   async createDay(userInfo) {
     const account = await accountService.getAccount(userInfo)
     const day = await dbContext.Day.create({ accountId: account.id, calorieGoal: account.calorieGoal })
+    return day
+  }
+
+
+  async updateDay(dayId, dayData, userInfo) {
+    const day = await this.getDayById(dayId)
+    if (day.accountId != userInfo.id) {
+      throw new Forbidden(`Cannot update day information for other users ${userInfo.nickname}`.toUpperCase())
+    }
+    day.mealsEaten = dayData.mealsEaten ?? day.mealsEaten
+    day.exercisesSaved = dayData.exercisesSaved ?? day.exercisesSaved
+    day.calorieGoal = dayData.calorieGoal ?? day.calorieGoal
+
+    await day.save()
     return day
   }
 

@@ -9,20 +9,21 @@ export class DaysController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getOrCreateDay)
-      .get('/:dayId', this.getTodaysDetails)
-      // .put('/:dayId', this.updateCalorieGoal)
+      .get('/:dayId', this.getDayById)
+      .put('/:dayId', this.updateDay)
+
   }
 
-  async getTodaysDetails(request, response, next) {
+  async getDayById(request, response, next) {
     try {
       const dayId = request.params.dayId
-      const details = await daysService.getTodaysDetails(dayId)
+      const details = await daysService.getDayById(dayId)
       response.send(details)
     } catch (error) {
       next(error)
     }
   }
-  
+
   async getDayByCalendarDate(request, response, next) {
     try {
       const day = await daysService.getDayByCalendarDate()
@@ -33,11 +34,23 @@ export class DaysController extends BaseController {
   }
 
 
-  
   async getOrCreateDay(request, response, next) {
     try {
       const userInfo = request.userInfo
       const day = await daysService.getOrCreateDay(userInfo)
+      response.send(day)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async updateDay(request, response, next) { // update meals exercises and more for the day
+    try {
+      const userInfo = request.userInfo
+      const dayData = request.body
+      const dayId = request.params.dayId
+
+      const day = await daysService.updateDay(dayId, dayData, userInfo)
       response.send(day)
     } catch (error) {
       next(error)
