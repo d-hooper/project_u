@@ -1,9 +1,25 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import { Pop } from '@/utils/Pop.js';
+import { logger } from '@/utils/Logger.js';
+import { daysService } from '@/services/DaysService.js';
 
 const account = computed(() => AppState.account)
 
+onMounted(() => {
+  getOrCreateCurrentDay()
+})
+
+async function getOrCreateCurrentDay() {
+  try {
+    await daysService.getOrCreateCurrentDay()
+  }
+  catch (error) {
+    Pop.error(error, 'Could not get days for this account');
+    logger.error('Could not get days for this account'.toUpperCase(), error);
+  }
+}
 </script>
 
 <template>
