@@ -5,7 +5,8 @@ export class Day {
     this.accountId = data.accountId
     this.journalBody = data.journalBody
     this.mood = data.mood
-    this.createdAt = data.createdAt
-    this.updatedAt = data.updatedAt
+    this.mealDays = data.mealDays
+    this.createdAt = new Date(data.createdAt)
+    this.updatedAt = new Date(data.updatedAt)
   }
 }
