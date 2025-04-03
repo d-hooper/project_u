@@ -27,7 +27,7 @@ const food = computed(() => AppState.activeFood)
           <div class="fs-4">
             <p>Serving: 1</p>
             <p v-if="food.calories.amount">Calories: {{ food.calories.amount.toFixed(0) }} {{ food.calories.unit }}</p>
-            <p v-if="food.carbohydrates.amount">Carbohydrates: {{ food.carbohydrates.amount.toFixed(0) }} {{
+            <p v-if="food.carbohydrates.amount > .5">Carbohydrates: {{ food.carbohydrates.amount.toFixed(0) }} {{
               food.carbohydrates.unit }}</p>
             <p v-if="food.protein.amount">Protein: {{ food.protein.amount.toFixed(0) }} {{ food.protein.unit }}</p>
             <p v-if="food.fat.amount">Fat: {{ food.fat.amount.toFixed(0) }} {{ food.fat.unit }}</p>

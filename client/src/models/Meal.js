@@ -4,7 +4,6 @@ export class Meal {
     this.name = data.name || data.title
     this.image = data.image
     // this.calories = data.nutrition.nutrients.amount
-    this.servings = 0
 
   }
   imageBaseUrl = 'https://img.spoonacular.com/ingredients'
@@ -34,5 +33,6 @@ export class ActiveMeal extends Meal {
     this.fat = data.nutrition.nutrients.find(object => object.name == 'Fat')
     this.calcium = data.nutrition.nutrients.find(object => object.name == 'Calcium')
     this.cholesterol = data.nutrition.nutrients.find(object => object.name == 'Cholesterol')
+    this.serving = data.nutrition.weightPerServing.amount
   }
 }
