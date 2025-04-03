@@ -25,6 +25,14 @@ export class ActiveMeal extends Meal {
     super(data)
     this.category = data.categoryPath
     this.calories = data.nutrition.nutrients.find(object => object.name == 'Calories')
-
+    this.carbohydrates = data.nutrition.nutrients.find(object => object.name == 'Carbohydrates')
+    this.sugar = data.nutrition.nutrients.find(object => object.name == 'Sugar')
+    this.caffeine = data.nutrition.nutrients.find(object => object.name == 'Caffeine')
+    this.protein = data.nutrition.nutrients.find(object => object.name == 'Protein')
+    this.sodium = data.nutrition.nutrients.find(object => object.name == 'Sodium')
+    this.iron = data.nutrition.nutrients.find(object => object.name == 'Iron')
+    this.fat = data.nutrition.nutrients.find(object => object.name == 'Fat')
+    this.calcium = data.nutrition.nutrients.find(object => object.name == 'Calcium')
+    this.cholesterol = data.nutrition.nutrients.find(object => object.name == 'Cholesterol')
   }
 }
