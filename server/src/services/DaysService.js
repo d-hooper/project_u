@@ -13,18 +13,6 @@ class DaysService {
     return day
   }
 
-  // async getDayByCalendarDate(userInfo) {
-  //   const today = new Date()
-  //   const day = await dbContext.Day.findOne({
-  //     createdAt: {
-  //       $lte: today.setHours(0, 0, 0, 0),
-  //       $gte: today.setHours(23, 59, 59, 999),
-  //     },
-  //     accountId: userInfo.id
-  //   })
-  //   return day
-  // }
-
   async getDayByCalendarDate(userInfo) {
     const today = new Date().toLocaleDateString('ja-JP', { day: '2-digit', month: '2-digit', year: 'numeric' }).replaceAll('/', '-')
     const day = await dbContext.Day.findOne({

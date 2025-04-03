@@ -8,7 +8,6 @@ export class MealDaysController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createMealDay)
-      .get
   }
 
   async createMealDay(request, response, next) {
