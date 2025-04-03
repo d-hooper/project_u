@@ -5,7 +5,6 @@ import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
-import Example from '@/components/Example.vue';
 
 const editableSearchData = ref('')
 const foods = computed(() => AppState.searchedFoods)
