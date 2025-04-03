@@ -13,7 +13,7 @@ const food = computed(() => AppState.activeFood)
 <template>
   <!-- inert? -->
   <div class="modal fade" id="NutritionInfoModal" tabindex="-1" aria-labelledby="NutritionInfoModalLabel"
-       aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
@@ -21,7 +21,12 @@ const food = computed(() => AppState.activeFood)
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <div class="text-center">
+            <img :src="`${food.imageBaseUrl}` + '_250x250/' + `${food.image}`" alt="">
+          </div>
+          <div>
+            <p>Calories: {{ food.calories.amount }}</p>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
