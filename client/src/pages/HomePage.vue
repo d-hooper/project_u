@@ -45,7 +45,8 @@ async function getFoodItemsByQuery() {
   </section>
   <section class="container">
     <div class="row">
-      <div v-for="food in foods" :key="food.id" class="col-md-4 col-lg-3">
+      <!-- col-md-4 col-lg-3  -->
+      <div v-for="food in foods" :key="food.id" class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
         <SearchedFood :food="food" />
       </div>
     </div>
@@ -65,4 +66,7 @@ async function getFoodItemsByQuery() {
 input {
   width: 100%;
 }
+
+
+
 </style>
