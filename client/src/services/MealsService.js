@@ -7,8 +7,8 @@ import { AppState } from "@/AppState.js"
 
 
 class MealsService {
- async addFoodToDay(foodId) {
-    const response = await api.post(`mealDay`, foodId)
+  async addMealToDay(meal) {
+    const response = await api.post(`mealDay/entry`, meal)
     logger.log()
   }
 

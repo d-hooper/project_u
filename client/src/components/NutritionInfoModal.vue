@@ -9,9 +9,9 @@ import { computed } from 'vue';
 const food = computed(() => AppState.activeFood)
 
 
-async function addFoodToDay(foodId) {
+async function addFoodToDay(food) {
   try {
-    await mealsService.addFoodToDay(foodId)
+    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id })
   }
   catch (error) {
     Pop.error(error, 'could not log food!');
@@ -63,7 +63,7 @@ async function addFoodToDay(foodId) {
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="addFoodToDay(food.id)" type="button" class="btn btn-primary">Log Food</button>
+          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log Food</button>
         </div>
       </div>
       <div v-else class="modal-content">

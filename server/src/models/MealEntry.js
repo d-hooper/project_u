@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const MealDaySchema = new Schema({
+export const MealEntrySchema = new Schema({
   mealId: { type: Schema.ObjectId, required: true, ref: "Meal" },
   dayId: { type: Schema.ObjectId, required: true, ref: "Day" },
   accountId: { type: Schema.ObjectId, required: true, ref: 'Account' }
@@ -8,7 +8,7 @@ export const MealDaySchema = new Schema({
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
-MealDaySchema.virtual('meal',
+MealEntrySchema.virtual('meal',
   {
     localField: 'mealId',
     foreignField: '_id',
