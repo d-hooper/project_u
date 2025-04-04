@@ -11,7 +11,7 @@ const food = computed(() => AppState.activeFood)
 
 async function addFoodToDay(food) {
   try {
-    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id })
+    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, calorieCount: food.calories.amount, servingSize: food.servings })
   }
   catch (error) {
     Pop.error(error, 'could not log food!');
