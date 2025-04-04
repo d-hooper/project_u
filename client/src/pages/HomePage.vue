@@ -35,7 +35,7 @@ async function getFoodItemsByQuery() {
           <form @submit.prevent="getFoodItemsByQuery()" class="mx-3 w-100">
             <div class="form-floating mb-3">
               <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput"
-                     placeholder="name@example.com">
+                placeholder="name@example.com">
               <label for="floatingInput">Search for food</label>
             </div>
           </form>
