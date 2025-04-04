@@ -12,7 +12,7 @@ MealDaySchema.virtual('meal',
   {
     localField: 'mealId',
     foreignField: '_id',
-    justOne: false,
+    justOne: true,
     ref: 'Meal'
   }
 )

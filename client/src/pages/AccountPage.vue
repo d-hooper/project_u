@@ -7,6 +7,7 @@ import { daysService } from '@/services/DaysService.js';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
+const mealDays = computed(() => AppState.mealDays)
 
 onMounted(() => {
   getOrCreateCurrentDay()
@@ -35,16 +36,40 @@ async function getOrCreateCurrentDay() {
             <div class="d-flex flex-column align-items-center bg-dark text-bg-dark py-4">
               <h2>{{ activeDay.createdAt.toDateString() }}</h2>
               <div class="cal-goal d-flex justify-content-center align-items-center">
-                <p class="mb-0 display-4">{{ activeDay.calorieGoal }}</p>
+                <p class="mb-0 display-5 text-center">{{ activeDay.dayCaloriesConsumed }} / {{ activeDay.calorieGoal }}
+                </p>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div>
               <h2>Meals Eaten</h2>
-              <div class="d-flex">
-
-              </div>
+              <table class="table w-100">
+                <thead>
+                  <tr>
+                    <th scope="col">Meal/Item</th>
+                    <th scope="col">Servings</th>
+                    <th scope="col">Calories</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="mealDay in mealDays" :key="mealDay.id">
+                    <th scope="row" class="text-capitalize">
+                      <img :src="mealDay.smImageURL" :alt="mealDay.meal.name" class="table-img">
+                      {{ mealDay.meal.name }}
+                    </th>
+                    <td>{{ mealDay.meal.servingSize }}</td>
+                    <td>{{ mealDay.meal.calorieCount * mealDay.meal.servingSize }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total Calories</th>
+                    <td></td>
+                    <td>{{ activeDay.dayCaloriesConsumed }}</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
@@ -63,5 +88,27 @@ async function getOrCreateCurrentDay() {
   border-radius: 50%;
   border-style: outset;
   border-color: var(--bs-indigo);
+}
+
+table {
+  border: 2px inset var(--bs-indigo)
+}
+
+thead {
+  border-bottom: 2px solid var(--bs-indigo);
+}
+
+tr {
+  border-bottom: 2px solid var(--bs-indigo);
+}
+
+td,
+th {
+  border-right: 2px solid var(--bs-indigo);
+  padding: 0.25rem;
+}
+
+.table-img {
+  height: 5dvh;
 }
 </style>

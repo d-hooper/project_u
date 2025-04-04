@@ -9,4 +9,14 @@ export class Day {
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
   }
+
+  get dayCaloriesConsumed() {
+    let dayCalorieCount = 0
+    for (let i = 0; i < this.mealDays.length; i++) {
+      const mealDay = this.mealDays[i];
+      let mealTotal = mealDay.meal.calorieCount * mealDay.meal.servingSize
+      dayCalorieCount += mealTotal
+    }
+    return dayCalorieCount
+  }
 }
