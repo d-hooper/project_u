@@ -4,6 +4,15 @@ import { accountService } from "./AccountService.js"
 
 class DaysService {
 
+  async getDaysByAccountId(userId) {
+    const days = await dbContext.Day
+      .find({ accountId: userId })
+      .populate('mealEntry')
+      .sort('date')
+      .limit(7)
+    return days
+  }
+
   async getOrCreateDay(userInfo) {
     let day
     day = await this.getDayByCalendarDate(userInfo)
@@ -14,14 +23,15 @@ class DaysService {
   }
 
   async getDayByCalendarDate(userInfo) {
-    // TODO validate format for userInfo.day
-    const date = userInfo.day || new Date().toLocaleDateString('ja-JP', { day: '2-digit', month: '2-digit', year: 'numeric' }).replaceAll('/', '-')
+    const today = new Date().toLocaleDateString('ja-JP', { day: '2-digit', month: '2-digit', year: 'numeric' }).replaceAll('/', '-')
     const day = await dbContext.Day.findOne({
-      day: date,
-      accountId: userInfo.id,
+      createdAt: {
+        $gte: today,
+      },
+      accountId: userInfo.id
     })
       .populate({
-        path: "mealDays",
+        path: "mealEntry",
         populate: {
           path: "meal"
         }
@@ -31,15 +41,13 @@ class DaysService {
   }
 
   async getDayById(dayId) {
-    const day = await dbContext.Day.findById(dayId).populate('mealDays')
+    const day = await dbContext.Day.findById(dayId).populate('mealEntry')
     return day
   }
 
   async createDay(userInfo) {
     const account = await accountService.getAccount(userInfo)
-    const date = userInfo.day || new Date().toLocaleDateString('ja-JP', { day: '2-digit', month: '2-digit', year: 'numeric' }).replaceAll('/', '-')
-
-    const day = await dbContext.Day.create({ accountId: account.id, calorieGoal: account.calorieGoal, day: date })
+    const day = await dbContext.Day.create({ accountId: account.id, calorieGoal: account.calorieGoal })
     return day
   }
 

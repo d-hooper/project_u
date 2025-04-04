@@ -7,7 +7,7 @@ import { daysService } from '@/services/DaysService.js';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
-const mealDays = computed(() => AppState.mealDays)
+const mealEntries = computed(() => AppState.mealEntries)
 
 onMounted(() => {
   getOrCreateCurrentDay()
@@ -53,13 +53,13 @@ async function getOrCreateCurrentDay() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="mealDay in mealDays" :key="mealDay.id">
+                  <tr v-for="mealEntry in mealEntries" :key="mealEntry.id">
                     <th scope="row" class="text-capitalize">
-                      <img :src="mealDay.smImageURL" :alt="mealDay.meal.name" class="table-img">
-                      {{ mealDay.meal.name }}
+                      <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
+                      {{ mealEntry.meal.name }}
                     </th>
-                    <td>{{ mealDay.meal.servingSize }}</td>
-                    <td>{{ mealDay.meal.calorieCount * mealDay.meal.servingSize }}</td>
+                    <td>{{ mealEntry.meal.servingSize }}</td>
+                    <td>{{ mealEntry.meal.calorieCount * mealEntry.meal.servingSize }}</td>
                   </tr>
                 </tbody>
                 <tfoot>

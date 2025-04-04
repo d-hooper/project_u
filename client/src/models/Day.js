@@ -5,15 +5,15 @@ export class Day {
     this.accountId = data.accountId
     this.journalBody = data.journalBody
     this.mood = data.mood
-    this.mealDays = data.mealDays
+    this.mealEntry = data.mealEntry
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
   }
 
   get dayCaloriesConsumed() {
     let dayCalorieCount = 0
-    for (let i = 0; i < this.mealDays.length; i++) {
-      const mealDay = this.mealDays[i];
+    for (let i = 0; i < this.mealEntry.length; i++) {
+      const mealDay = this.mealEntry[i];
       let mealTotal = mealDay.meal.calorieCount * mealDay.meal.servingSize
       dayCalorieCount += mealTotal
     }
