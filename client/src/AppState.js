@@ -8,6 +8,8 @@ export const AppState = reactive({
   account: null,
   /** @type {import('./models/Meal.js').Meal[]} user info from the database*/
   searchedFoods: [],
+
+  activeFood: null,
   /** @type {import('./models/Day.js').Day} user info from the database*/
   activeDay: null,
   /** @type {import('./models/Day.js').Day[]} user info from the database*/
@@ -15,5 +17,6 @@ export const AppState = reactive({
   /** @type {import('./models/mealDay.js').MealDay[]} user info from the database*/
 
   mealDays: []
+
 })
 
