@@ -26,7 +26,7 @@ async function getDetailsById(id, unit) {
 
 
 <template>
-  <div @click="getDetailsById(food.id, food.unit)" class="card mb-3 d-flex flex-column align-items-center"
+  <div @click="getDetailsById(food.id, food.theUnit)" class="card mb-3 d-flex flex-column align-items-center"
     data-bs-toggle="modal" data-bs-target="#NutritionInfoModal" type="button">
     <div>
       <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="food-search-img" role="button">

@@ -18,8 +18,9 @@ export class Meal {
   get lgImageURL() {
     return this.imageBaseUrl + '_500x500/' + this.image
   }
-  get unit(){
-    const unit = this.possibleUnits.find(unit => unit == 'serving') || 'g'
+  // NOTE we could add more potential units for it to find, or later we could have the user change the unit (perhaps using a dropdown)
+  get theUnit(){
+    const unit = this.possibleUnits.find(unit => unit == 'serving') || this.possibleUnits.find(unit => unit == 'piece') || 'g'
     return unit
   }
 }
@@ -40,5 +41,6 @@ export class ActiveMeal extends Meal {
     this.cholesterol = data.nutrition.nutrients.find(object => object.name == 'Cholesterol')
     this.serving = data.nutrition.weightPerServing.amount
     this.unitLong = data.unitLong
+    this.unit = data.unit
   }
 }

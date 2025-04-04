@@ -1,11 +1,23 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { mealsService } from '@/services/MealsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
 import { computed } from 'vue';
 
 
 const food = computed(() => AppState.activeFood)
 
 
+async function addFoodToDay(foodId) {
+  try {
+    await mealsService.addFoodToDay(foodId)
+  }
+  catch (error) {
+    Pop.error(error, 'could not log food!');
+    logger.log('could not log food', error)
+  }
+}
 
 </script>
 
@@ -25,7 +37,8 @@ const food = computed(() => AppState.activeFood)
             <img :src="`${food.imageBaseUrl}` + '_250x250/' + `${food.image}`" alt="">
           </div>
           <div class="fs-4">
-            <p class="text-capitalize">{{ food.unitLong }}: 1</p>
+            <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong }}: 1</p>
+            <p v-else class="text-capitalize">{{ food.unit }}: 1</p>
             <p v-if="food.calories && food.calories.amount > .5">Calories: {{ food.calories.amount.toFixed(0) }} {{
               food.calories.unit }}</p>
             <p v-if="food.carbohydrates && food.carbohydrates.amount > .5">Carbohydrates: {{
@@ -35,7 +48,7 @@ const food = computed(() => AppState.activeFood)
               food.protein.unit }}</p>
             <p v-if="food.fat && food.fat.amount > .5">Fat: {{ food.fat.amount.toFixed(0) }} {{ food.fat.unit }}</p>
             <p v-if="food.sugar && food.sugar.amount > .5">Sugar: {{ food.sugar.amount.toFixed(0) }} {{ food.sugar.unit
-              }}</p>
+            }}</p>
             <p v-if="food.sodium && food.sodium.amount > .5">Sodium: {{ food.sodium.amount.toFixed(0) }} {{
               food.sodium.unit }}</p>
             <p v-if="food.iron && food.iron.amount > .5">Iron: {{ food.iron.amount.toFixed(0) }} {{ food.iron.unit }}
@@ -50,7 +63,7 @@ const food = computed(() => AppState.activeFood)
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Eat food</button>
+          <button @click="addFoodToDay(food.id)" type="button" class="btn btn-primary">Log Food</button>
         </div>
       </div>
       <div v-else class="modal-content">
