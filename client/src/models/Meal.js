@@ -3,6 +3,7 @@ export class Meal {
     this.id = data.id
     this.name = data.name || data.title
     this.image = data.image
+    this.possibleUnits = data.possibleUnits
     // this.calories = data.nutrition.nutrients.amount
 
   }
@@ -34,5 +35,6 @@ export class ActiveMeal extends Meal {
     this.calcium = data.nutrition.nutrients.find(object => object.name == 'Calcium')
     this.cholesterol = data.nutrition.nutrients.find(object => object.name == 'Cholesterol')
     this.serving = data.nutrition.weightPerServing.amount
+    this.unitLong = data.unitLong
   }
 }

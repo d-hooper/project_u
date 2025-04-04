@@ -8,9 +8,9 @@ import { AppState } from "@/AppState.js"
 
 class MealsService {
 
-  async getDetailsById(id) {
+  async getDetailsById(id, unit) {
     AppState.activeFood = null
-    const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=serving`)
+    const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
     logger.log('here is your detailed food', response.data)
     const food = new ActiveMeal(response.data)
     AppState.activeFood = food
