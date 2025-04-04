@@ -18,6 +18,10 @@ export class Meal {
   get lgImageURL() {
     return this.imageBaseUrl + '_500x500/' + this.image
   }
+  get unit(){
+    const unit = this.possibleUnits.find(unit => unit == 'serving') || 'g'
+    return unit
+  }
 }
 
 export class ActiveMeal extends Meal {
