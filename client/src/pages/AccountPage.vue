@@ -87,24 +87,24 @@ async function getOrCreateCurrentDay() {
   aspect-ratio: 1/1;
   border-radius: 50%;
   border-style: outset;
-  border-color: var(--bs-indigo);
+  border-color: var(--bs-primary);
 }
 
 table {
-  border: 2px inset var(--bs-indigo)
+  border: 2px inset var(--bs-primary)
 }
 
 thead {
-  border-bottom: 2px solid var(--bs-indigo);
+  border-bottom: 2px solid var(--bs-primary);
 }
 
 tr {
-  border-bottom: 2px solid var(--bs-indigo);
+  border-bottom: 2px solid var(--bs-primary);
 }
 
 td,
 th {
-  border-right: 2px solid var(--bs-indigo);
+  border-right: 2px solid var(--bs-primary);
   padding: 0.25rem;
 }
 
