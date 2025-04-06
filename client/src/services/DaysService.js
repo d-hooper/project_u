@@ -17,6 +17,12 @@ class DaysService {
   async getDaysByAccountId() {
     const response = await api.get('account/days')
     logger.log('Previous Days', response.data)
+    const days = response.data.map(day => new Day(day))
+    AppState.days = days
+  }
+  setActiveDay(dayId) {
+    const newDay = AppState.days.find(day => day.id == dayId)
+    AppState.activeDay = newDay
   }
 }
 

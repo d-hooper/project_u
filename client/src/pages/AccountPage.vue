@@ -8,6 +8,7 @@ import { daysService } from '@/services/DaysService.js';
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
 const mealEntries = computed(() => AppState.mealEntries)
+const days = computed(() => AppState.days)
 
 onMounted(() => {
   getOrCreateCurrentDay()
@@ -33,6 +34,21 @@ async function getDaysByAccountId() {
     logger.error('Could not get days for this account'.toUpperCase(), error);
   }
 }
+
+async function getDayById(dayId) {
+  try {
+    if (dayId == activeDay.value.id) {
+      Pop.toast('The selected day is already displayed')
+      return
+    }
+    await daysService.setActiveDay(dayId)
+  }
+  catch (error) {
+    Pop.error(error, 'Could not get selected day for this account');
+    logger.error('Could not get selected day for this account'.toUpperCase(), error);
+  }
+}
+
 </script>
 
 <template>
@@ -64,7 +80,7 @@ async function getDaysByAccountId() {
                     <th scope="col">Calories</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="mealEntries">
                   <tr v-for="mealEntry in mealEntries" :key="mealEntry.id">
                     <th scope="row" class="text-capitalize">
                       <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
@@ -91,6 +107,24 @@ async function getDaysByAccountId() {
   <div v-else>
     <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
   </div>
+  <section v-if="days" class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div v-for="day in days" :key="day.id" class="col-md-4">
+            <div @click="getDayById(day.id)" class="card text-center" role="button">
+              <div>
+                <p class="mb-0 fs-3">{{ day.day.toDateString() }}</p>
+              </div>
+              <div>
+                <p class="md-0 fs-5">Calorie Goal: {{ day.calorieGoal }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped lang="scss">
