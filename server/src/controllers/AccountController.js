@@ -1,6 +1,7 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService.js'
 import BaseController from '../utils/BaseController.js'
+import { daysService } from '../services/DaysService.js'
 
 export class AccountController extends BaseController {
   constructor() {
@@ -9,7 +10,7 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
-
+      .get('/days', this.getDaysByAccountId)
   }
 
   async getUserAccount(req, res, next) {
@@ -21,7 +22,7 @@ export class AccountController extends BaseController {
     }
   }
 
-   async editUserAccount(req, res, next) {
+  async editUserAccount(req, res, next) {
     try {
       const accountId = req.userInfo.id
       req.body.id = accountId
@@ -31,5 +32,16 @@ export class AccountController extends BaseController {
       next(error)
     }
   }
-  
+
+  async getDaysByAccountId(req, res, next) {
+    try {
+      const userId = req.userInfo.id
+      const days = await daysService.getDaysByAccountId(userId)
+      res.send(days)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
 }
