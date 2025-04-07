@@ -26,15 +26,15 @@ async function getDetailsById(id, unit) {
 
 
 <template>
-  <div @click="getDetailsById(food.id, food.theUnit)" class="card shadow mb-3 d-flex flex-column align-items-center"
+  <div @click="getDetailsById(food.id, food.theUnit)" class="card shadow mb-4 d-flex flex-column align-items-center"
     data-bs-toggle="modal" data-bs-target="#NutritionInfoModal" type="button">
     <div class="d-flex align-items-center justify-content-evenly flex-column">
-      <div class="card-body">
+      <div class="card-body card-image-body">
         <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="food-search-img" role="button">
 
       </div>
-      <div class="card-body">
-        <h2 class="mb-0 text-capitalize text-primary fw-bold fs-5 food-title">{{ food.name }}</h2>
+      <div class="card-body card-title-body d-flex align-items-center justify-content-center">
+        <div class="mb-0 text-capitalize text-primary fw-bold fs-4 text-center">{{ food.name }}</div>
       </div>
     </div>
   </div>
@@ -42,13 +42,28 @@ async function getDetailsById(id, unit) {
 
 
 <style lang="scss" scoped>
+
+.card-title-body{
+ height: 10dvh;
+ width: 100%;
+ aspect-ratio: 1/1;
+
+}
+
+// .card-image-body{
+//  height: 25dvh;
+//  width: 100%;
+//  aspect-ratio: 1/1;
+
+// }
+
 .food-search-img {
-  // height: 10rem;
-  height: 25dvh;
+
+   height: 25dvh;
   width: 100%;
   aspect-ratio: 1/1;
-  object-position: top;
-  object-fit: cover;
+  // object-position: top;
+  object-fit: contain;
 
 }
 
@@ -66,6 +81,6 @@ async function getDetailsById(id, unit) {
 
 .card {
   border: none;
-
+  // height: 20dvh
 }
 </style>
