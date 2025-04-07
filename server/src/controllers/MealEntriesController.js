@@ -41,4 +41,5 @@ export class MealDaysController extends BaseController {
       next(error)
     }
   }
+
 }
