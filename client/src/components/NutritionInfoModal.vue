@@ -66,7 +66,7 @@ async function addFoodToDay(food) {
               <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong
               }}: 1
               </p>
-              <p v-else class="text-capitalize border border-indigo rounded ps-2">{{ food.unit }}: 1</p>
+              <p v-else class="text-capitalize border border-indigo rounded ps-2">{{ food.theUnit }}: 1</p>
               <div class="d-flex gap-2">
                 <span @click="decreaseServingSize()" type="button" title="decrease serving"
                   class="mdi mdi-minus-circle"></span>
