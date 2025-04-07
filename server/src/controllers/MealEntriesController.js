@@ -11,6 +11,7 @@ export class MealEntriesController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('/entry', this.addEntryToDay)
       .post('', this.addKnownEntry)
+      .delete('/:entryId', this.deleteEntry)
   }
 
   async addEntryToDay(request, response, next) {
@@ -42,4 +43,19 @@ export class MealEntriesController extends BaseController {
     }
   }
 
+  async deleteEntry(request, response, next) {
+    try {
+      const userInfo = request.userInfo
+      const entryId = request.params.entryId
+      const message = await mealEntriesService.deleteEntry(userInfo, entryId)
+      response.send(message)
+    }
+    catch (error) {
+      next(error)
+    }
+  }
+
 }
+
+
+
