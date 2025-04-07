@@ -1,4 +1,4 @@
-export class MealDay {
+export class MealEntry {
   constructor(data) {
     this.id = data.id
     this.dayId = data.dayId
