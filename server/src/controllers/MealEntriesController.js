@@ -4,7 +4,7 @@ import BaseController from "../utils/BaseController.js";
 import { mealsService } from "../services/MealsService.js";
 import { daysService } from "../services/DaysService.js";
 
-export class MealDaysController extends BaseController {
+export class MealEntriesController extends BaseController {
   constructor() {
     super('mealDay')
     this.router
