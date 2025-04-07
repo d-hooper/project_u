@@ -76,46 +76,59 @@ async function addFoodToDay(food) {
             </div>
             <p v-if="food.calories && food.calories.amount > 1" class="border border-indigo rounded ps-2">
               Calories:
-              {{ food.calories.amount.toFixed(0) }}
-              {{ food.calories.unit }}</p>
-            <p v-else class="border border-indigo rounded ps-2">
-              Calories: {{
-                food.calories.amount }} {{
-                food.calories.unit }}</p>
-            <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-indigo rounded ps-2">
-              Carbohydrates: {{
-                food.carbohydrates.amount.toFixed(0) }} {{
-                food.carbohydrates.unit }}</p>
-            <p v-if="food.protein && food.protein.amount > .5" class="border border-indigo rounded ps-2">Protein:
-              {{
-                food.protein.amount.toFixed(0) }} {{
-                food.protein.unit }}</p>
-            <p v-if="food.fat && food.fat.amount > .5" class="border border-indigo rounded ps-2">Fat: {{
-              food.fat.amount.toFixed(0) }}
-              {{ food.fat.unit }}</p>
-            <p v-if="food.sugar && food.sugar.amount > .5" class="border border-indigo rounded ps-2">Sugar: {{
-              food.sugar.amount.toFixed(0) }} {{ food.sugar.unit
-              }}</p>
-            <p v-if="food.sodium && food.sodium.amount > .5" class="border border-indigo rounded ps-2">Sodium: {{
-              food.sodium.amount.toFixed(0) }} {{
-                food.sodium.unit }}</p>
-            <p v-if="food.iron && food.iron.amount > .5" class="border border-indigo rounded ps-2">Iron: {{
-              food.iron.amount.toFixed(0)
-            }} {{ food.iron.unit }}
+              {{ food.calories.amount.toFixed(0) * serving }}
+              {{ food.calories.unit }}
             </p>
-            <p v-if="food.calcium && food.calcium.amount > .5" class="border border-indigo rounded ps-2">Calcium:
-              {{
-                food.calcium.amount.toFixed(0) }} {{
-                food.calcium.unit }}</p>
+            <p v-else class="border border-indigo rounded ps-2">
+              Calories:
+              {{ food.calories.amount * serving }}
+              {{ food.calories.unit }}
+            </p>
+            <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-indigo rounded ps-2">
+              Carbohydrates:
+              {{ food.carbohydrates.amount.toFixed(0) * serving }}
+              {{ food.carbohydrates.unit }}
+            </p>
+            <p v-if="food.protein && food.protein.amount > .5" class="border border-indigo rounded ps-2">
+              Protein:
+              {{ food.protein.amount.toFixed(0) * serving }}
+              {{ food.protein.unit }}
+            </p>
+            <p v-if="food.fat && food.fat.amount > .5" class="border border-indigo rounded ps-2">
+              Fat:
+              {{ food.fat.amount.toFixed(0) * serving }}
+              {{ food.fat.unit }}
+            </p>
+            <p v-if="food.sugar && food.sugar.amount > .5" class="border border-indigo rounded ps-2">
+              Sugar:
+              {{ food.sugar.amount.toFixed(0) * serving }}
+              {{ food.sugar.unit }}
+            </p>
+            <p v-if="food.sodium && food.sodium.amount > .5" class="border border-indigo rounded ps-2">
+              Sodium:
+              {{ food.sodium.amount.toFixed(0) * serving }}
+              {{ food.sodium.unit }}
+            </p>
+            <p v-if="food.iron && food.iron.amount > .5" class="border border-indigo rounded ps-2">
+              Iron:
+              {{ food.iron.amount.toFixed(0) * serving }}
+              {{ food.iron.unit }}
+            </p>
+            <p v-if="food.calcium && food.calcium.amount > .5" class="border border-indigo rounded ps-2">
+              Calcium:
+              {{ food.calcium.amount.toFixed(0) * serving }}
+              {{ food.calcium.unit }}
+            </p>
             <p v-if="food.caffeine && food.caffeine.amount > .5" class="border border-indigo rounded ps-2">
-              Caffeine: {{
-                food.caffeine.amount.toFixed(0) }} {{
-                food.caffeine.unit }}</p>
+              Caffeine:
+              {{ food.caffeine.amount.toFixed(0) * serving }}
+              {{ food.caffeine.unit }}
+            </p>
             <p v-if="food.cholesterol && food.cholesterol.amount > .5" class="border border-indigo rounded ps-2">
               Cholesterol:
-              {{
-                food.cholesterol.amount.toFixed(0) }} {{
-                food.cholesterol.unit }}</p>
+              {{ food.cholesterol.amount.toFixed(0) * serving }}
+              {{ food.cholesterol.unit }}
+            </p>
           </div>
         </div>
         <div class="modal-footer">
