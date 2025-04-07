@@ -1,3 +1,5 @@
+import { AppState } from "@/AppState.js"
+
 export class Meal {
   constructor(data) {
     this.id = data.id
@@ -19,7 +21,7 @@ export class Meal {
     return this.imageBaseUrl + '_500x500/' + this.image
   }
   // NOTE we could add more potential units for it to find, or later we could have the user change the unit (perhaps using a dropdown)
-  get theUnit(){
+  get theUnit() {
     const unit = this.possibleUnits.find(unit => unit == 'serving') || this.possibleUnits.find(unit => unit == 'piece') || 'g'
     return unit
   }

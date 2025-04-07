@@ -4,6 +4,8 @@ export class MealEntry {
     this.dayId = data.dayId
     this.accountId = data.accountId
     this.meal = data.meal
+    this.servings = data.servings
+
   }
 
   imageBaseUrl = 'https://img.spoonacular.com/ingredients'

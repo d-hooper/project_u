@@ -34,7 +34,7 @@ function resetServingSize() {
 async function addFoodToDay(food) {
   try {
 
-    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id })
+    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value })
     Pop.success(`You successfully added ${food.name} to your calorie count!`)
   }
   catch (error) {

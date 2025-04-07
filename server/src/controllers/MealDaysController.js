@@ -20,17 +20,9 @@ export class MealDaysController extends BaseController {
 
       // {  spoonacularId, name, image, day?  }
 
-      const meal = await mealsService.getOrCreateMeal(mealData)
-      const day = await daysService.getOrCreateDay({ day: mealData.day, id: request.userInfo.id })
-      const entry = await mealEntriesService.createEntry({
-        dayId: day.id,
-        mealId: meal.id,
-        accountId: request.userInfo.id,
-        // servings: req.body.servings
-      })
-      // create the meal entry
+      const entry = await mealsService.getOrCreateMeal(mealData, request.userInfo)
 
-      response.send({ meal, day, entry })
+      response.send(entry)
     } catch (error) {
       next(error)
     }
@@ -41,6 +33,8 @@ export class MealDaysController extends BaseController {
       // check body for mealId; 
       // if no mealId, spoonacular Id should be there; or fail if not
       // add new meal to Id 
+      const mealData = req.body
+
       res.send('NOT HERE')
     }
     catch (error) {

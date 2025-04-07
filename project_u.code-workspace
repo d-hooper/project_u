@@ -29,6 +29,9 @@
       "titleBar.inactiveBackground": "#7db83d99",
       "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#7db83d"
+    "peacock.color": "#7db83d",
+    "cSpell.words": [
+      "spoonacular"
+    ]
   }
 }
