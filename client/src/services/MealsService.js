@@ -7,9 +7,22 @@ import { AppState } from "@/AppState.js"
 
 
 class MealsService {
+  resetServingSize() {
+    AppState.activeFoodServingSize = 1
+  }
+  decreaseServingSize() {
+    if (AppState.activeFoodServingSize == 0) {
+      return
+    }
+    AppState.activeFoodServingSize--
+  }
+  increaseServingSize() {
+    AppState.activeFoodServingSize++
+  }
   async addMealToDay(meal) {
     const response = await api.post(`mealDay/entry`, meal)
     logger.log()
+    AppState.activeFoodServingSize = 1
   }
 
   async getDetailsById(id, unit) {
