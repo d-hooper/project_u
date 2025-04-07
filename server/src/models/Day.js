@@ -23,9 +23,9 @@ DaySchema.virtual('account', {
 }
 )
 
-DaySchema.virtual('mealDays', {
+DaySchema.virtual('mealEntry', {
   localField: "_id",
   foreignField: "dayId",
-  ref: "MealDay",
+  ref: "MealEntry",
   justOne: false
 })

@@ -11,7 +11,7 @@ class DbContext {
   Day = mongoose.model('Day', DaySchema);
   Meal = mongoose.model('Meal', MealSchema);
   Exercise = mongoose.model('Exercise', ExerciseSchema);
-  MealDay = mongoose.model('MealDay', MealEntrySchema)
+  MealEntry = mongoose.model('MealEntry', MealEntrySchema)
 }
 
 export const dbContext = new DbContext()

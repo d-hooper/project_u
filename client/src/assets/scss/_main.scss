@@ -148,6 +148,7 @@
   pointer-events: none;
   min-width: 30ch;
   gap: .25em;
+  z-index: 2;
 
   .toast,
   .alert {
