@@ -111,13 +111,17 @@ async function getDayById(dayId) {
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div v-for="day in days" :key="day.id" class="col-md-4">
+          <div v-for="day in days" :key="day.id" class="col-md-3">
             <div @click="getDayById(day.id)" class="card text-center" role="button">
-              <div>
-                <p class="mb-0 fs-3">{{ day.day.toDateString() }}</p>
-              </div>
-              <div>
-                <p class="md-0 fs-5">Calorie Goal: {{ day.calorieGoal }}</p>
+              <div class="day-card d-flex justify-content-center flex-column">
+                <span
+                      :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>
+                <div>
+                  <p class="mb-0 fs-3">{{ day.day.toLocaleDateString() }}</p>
+                </div>
+                <div>
+                  <p class="md-0 fs-5">Calories: {{ day.dayCaloriesConsumed + '/' + day.calorieGoal }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -159,5 +163,9 @@ th {
 
 .table-img {
   height: 5dvh;
+}
+
+.day-card {
+  height: 25dvh;
 }
 </style>

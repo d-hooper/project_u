@@ -7,7 +7,12 @@ class DaysService {
   async getDaysByAccountId(userId) {
     const days = await dbContext.Day
       .find({ accountId: userId })
-      .populate('mealEntry')
+      .populate({
+        path: "mealEntry",
+        populate: {
+          path: "meal"
+        }
+      })
       .sort('date')
       .limit(7)
     return days

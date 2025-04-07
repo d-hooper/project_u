@@ -1,12 +1,14 @@
+import { MealEntry } from "./MealEntry.js"
+
 export class Day {
   constructor(data) {
     this.id = data.id
-    this.day = new Date(data.day)
+    this.day = new Date(data.day.replaceAll('-', '/'))
     this.calorieGoal = data.calorieGoal
     this.accountId = data.accountId
     this.journalBody = data.journalBody
     this.mood = data.mood
-    this.mealEntries = data.mealEntry
+    this.mealEntries = data.mealEntry.map(entry => new MealEntry(entry))
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
   }

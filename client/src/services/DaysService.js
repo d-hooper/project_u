@@ -10,8 +10,7 @@ class DaysService {
     // logger.log(response.data)
     const day = new Day(response.data)
     AppState.activeDay = day
-    const mealEntries = response.data.mealEntry.map(md => new MealEntry(md))
-    AppState.mealEntries = mealEntries
+    AppState.mealEntries = day.mealEntries
   }
 
   async getDaysByAccountId() {
@@ -23,6 +22,8 @@ class DaysService {
   setActiveDay(dayId) {
     const newDay = AppState.days.find(day => day.id == dayId)
     AppState.activeDay = newDay
+    AppState.mealEntries = newDay.mealEntries
+    logger.log(newDay)
   }
 }
 
