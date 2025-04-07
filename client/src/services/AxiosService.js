@@ -11,7 +11,7 @@ export const spoonacularApi = Axios.create({
   baseURL: 'https://api.spoonacular.com',
   params: {
 
-   apiKey: 'aec74e66b689464a934015731bd8bdcd'
+    apiKey: '98643d1c6cde40ed94778e426ad571aa'
 
   },
   timeout: 3000

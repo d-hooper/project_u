@@ -7,6 +7,28 @@ import { AppState } from "@/AppState.js"
 
 
 class MealsService {
+  async getFoodItemsByQuery(searchQuery) {
+    const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
+    logger.log(response.data)
+    const ingredients = response.data.results.map(ing => new Meal(ing))
+    AppState.searchedFoods = ingredients
+    logger.log(AppState.searchedFoods)
+  }
+
+  async getRecipesByQuery(searchQuery) {
+    const response = await spoonacularApi.get(`recipes/complexSearch?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
+    const recipes = response.data.results.map(ing => new Meal(ing))
+    AppState.searchedFoods = recipes
+  }
+
+  async getDetailsById(id, unit) {
+    AppState.activeFood = null
+    const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
+    logger.log('here is your detailed food', response.data)
+    const food = new ActiveMeal(response.data)
+    AppState.activeFood = food
+
+  }
   resetServingSize() {
     AppState.activeFoodServingSize = 1
   }
@@ -25,22 +47,8 @@ class MealsService {
     AppState.activeFoodServingSize = 1
   }
 
-  async getDetailsById(id, unit) {
-    AppState.activeFood = null
-    const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
-    logger.log('here is your detailed food', response.data)
-    const food = new ActiveMeal(response.data)
-    AppState.activeFood = food
 
-  }
   // &minCalories=50
-  async getFoodItemsByQuery(searchQuery) {
-    const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
-    logger.log(response.data)
-    const ingredients = response.data.results.map(ing => new Meal(ing))
-    AppState.searchedFoods = ingredients
-    logger.log(AppState.searchedFoods)
-  }
 
 }
 
