@@ -52,6 +52,7 @@ async function getFoodItemsByQuery() {
     </div>
   </section>
   <NutritionInfoModal />
+
 </template>
 
 <style scoped lang="scss">
@@ -66,7 +67,4 @@ async function getFoodItemsByQuery() {
 input {
   width: 100%;
 }
-
-
-
 </style>

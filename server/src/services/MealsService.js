@@ -11,7 +11,8 @@ class MealsService {
         spoonacularMealId: mealData.spoonacularMealId,
         calorieCount: mealData.calories.amount,
         name: mealData.name,
-        image: mealData.image
+        image: mealData.image,
+        unit: mealData.unit
       })
     }
 

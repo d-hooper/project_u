@@ -1,18 +1,27 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { MealEntry } from '@/models/MealEntry.js';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 import { computed, onMounted, ref, } from 'vue';
 
+// NOTE this was originally copied and pasted from Nutrition Info Modal, so there might be extra stuff we can take out
 
 const food = computed(() => AppState.activeFood)
 
 const serving = computed(() => AppState.activeFoodServingSize)
 
+const mealEntryId = computed(() => AppState.activeMealEntryId)
+
+
+// defineProps({
+//   mealEntry: { type: MealEntry, required: true }
+// })
+
 onMounted(() => {
-  const myModalId = document.getElementById('NutritionInfoModal')
+  const myModalId = document.getElementById('MealEntryModal')
   myModalId.addEventListener('hidden.bs.modal', event => {
     resetServingSize()
   })
@@ -29,7 +38,15 @@ function resetServingSize() {
   mealsService.resetServingSize()
 }
 
+async function changeServings() {
+  try {
 
+    await mealsService.changeServings(mealEntryId, serving.value)
+  } catch (error) {
+    Pop.error('couldnt change the serving amounts', error)
+    logger.log('nice try. but we cant change the serving amount', error)
+  }
+}
 
 async function addFoodToDay(food) {
   try {
@@ -48,12 +65,11 @@ async function addFoodToDay(food) {
 
 <template>
   <!-- inert? -->
-  <div class="modal fade" id="NutritionInfoModal" tabindex="-1" aria-labelledby="NutritionInfoModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="MealEntryModal" tabindex="-1" aria-labelledby="MealEntryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="NutritionInfoModalLabel">{{ food.name }}</h1>
+          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="MealEntryModalLabel">{{ food.name }}</h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
@@ -134,13 +150,13 @@ async function addFoodToDay(food) {
         </div>
         <div class="modal-footer">
 
-          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log
-            Food</button>
+          <button @click="changeServings()" type="button" class="btn btn-primary text-light">Save
+            Changes</button>
         </div>
       </div>
       <div v-else class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="NutritionInfoModalLabel"></h1>
+          <h1 class="modal-title fs-5" id="MealEntryModalLabel"></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
         </div>

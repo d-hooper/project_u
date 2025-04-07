@@ -7,6 +7,14 @@ import { AppState } from "@/AppState.js"
 
 
 class MealsService {
+  setActiveMealEntryId(mealEntryId) {
+    AppState.activeMealEntryId = mealEntryId
+  }
+  async changeServings(mealEntryId, serving) {
+    const updatedMealEntry = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
+    logger.log(updatedMealEntry)
+
+  }
   resetServingSize() {
     AppState.activeFoodServingSize = 1
   }
