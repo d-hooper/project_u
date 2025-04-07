@@ -31,7 +31,7 @@ async function getFoodItemsByQuery() {
   <section class="container">
     <div class="row">
       <div class="col-12">
-        <div class="form-area my-3 d-flex align-items-center rounded">
+        <div class="form-area my-3 d-flex align-items-center rounded shadow">
           <form @submit.prevent="getFoodItemsByQuery()" class="mx-3 w-100">
             <div class="form-floating mb-3">
               <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput"
@@ -44,8 +44,9 @@ async function getFoodItemsByQuery() {
     </div>
   </section>
   <section class="container">
-    <div class="row">
-      <div v-for="food in foods" :key="food.id" class="col-md-4 col-lg-3">
+    <div class="row mt-2">
+      <!-- col-md-4 col-lg-3  -->
+      <div v-for="food in foods" :key="food.id" class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
         <SearchedFood :food="food" />
       </div>
     </div>
@@ -65,4 +66,7 @@ async function getFoodItemsByQuery() {
 input {
   width: 100%;
 }
+
+
+
 </style>
