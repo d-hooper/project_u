@@ -63,7 +63,7 @@ async function getDayById(dayId) {
             <div class="d-flex flex-column align-items-center bg-dark text-bg-dark py-4">
               <h2>{{ activeDay.day.toDateString() }}</h2>
               <div
-                   :class="`cal-goal d-flex justify-content-center align-items-center ${activeDay.dayCaloriesConsumed > activeDay.calorieGoal ? 'border-danger' : 'border-success'}`">
+                :class="`cal-goal d-flex justify-content-center align-items-center ${activeDay.dayCaloriesConsumed > activeDay.calorieGoal ? 'border-danger' : 'border-success'}`">
                 <p class="mb-0 display-5 text-center">{{ activeDay.dayCaloriesConsumed }} / {{ activeDay.calorieGoal }}
                 </p>
               </div>
@@ -86,8 +86,8 @@ async function getDayById(dayId) {
                       <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
                       {{ mealEntry.meal.name }}
                     </th>
-                    <td>{{ mealEntry.meal.servingSize ?? 1 }}</td>
-                    <td>{{ mealEntry.meal.calorieCount ?? 0 * (mealEntry.meal.servingSize ?? 1) }}</td>
+                    <td>{{ mealEntry.servings }}</td>
+                    <td>{{ mealEntry.meal.calorieCount * mealEntry.servings }}</td>
                   </tr>
                 </tbody>
                 <tfoot>

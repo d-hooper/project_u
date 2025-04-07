@@ -17,7 +17,7 @@ export class Day {
     let dayCalorieCount = 0
     for (let i = 0; i < this.mealEntries.length; i++) {
       const mealDay = this.mealEntries[i];
-      let mealTotal = (mealDay.meal.calorieCount * (mealDay.meal.servingSize ?? 1))
+      let mealTotal = (mealDay.meal.calorieCount * (mealDay.servings))
       dayCalorieCount += mealTotal
     }
     return dayCalorieCount.toFixed(0)
