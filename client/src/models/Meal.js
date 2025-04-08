@@ -11,13 +11,23 @@ export class Meal {
   }
   imageBaseUrl = 'https://img.spoonacular.com/ingredients'
 
+  stringStarter = 'https://img.spoonacular.com'
   get smImageURL() {
+    if (this.image.includes(this.stringStarter)) {
+      return this.image
+    }
     return this.imageBaseUrl + '_100x100/' + this.image
   }
   get medImageURL() {
+    if (this.image.includes(this.stringStarter)) {
+      return this.image
+    }
     return this.imageBaseUrl + '_250x250/' + this.image
   }
   get lgImageURL() {
+    if (this.image.includes(this.stringStarter)) {
+      return this.image
+    }
     return this.imageBaseUrl + '_500x500/' + this.image
   }
   // NOTE we could add more potential units for it to find, or later we could have the user change the unit (perhaps using a dropdown)
