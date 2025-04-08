@@ -5,6 +5,10 @@ import { AppState } from "@/AppState.js"
 import { MealEntry } from "@/models/MealEntry.js"
 
 class DaysService {
+  // updateDay(id) {
+  //   const response = await api.put(`day/${id}`)
+
+  // }
   async getOrCreateCurrentDay() {
     const response = await api.get('day')
     // logger.log(response.data)
@@ -12,6 +16,7 @@ class DaysService {
     AppState.activeDay = day
     AppState.mealEntries = day.mealEntries
   }
+
 
   async getDaysByAccountId() {
     const response = await api.get('account/days')

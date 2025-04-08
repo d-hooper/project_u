@@ -17,10 +17,9 @@ class MealEntriesService {
     return entry
   }
   async changeServings(userInfo, entryId, entryData) {
-    const entry = await dbContext.MealEntry.findById(entryId)
+    const entry = await dbContext.MealEntry.findById(entryId).populate('meal')
     if (userInfo.id != entry.accountId) {
       throw new Forbidden('YOU CANNOT CHANGE SOMEONE ELSES SERVING SIZE!!!!!!');
-
     }
     entry.servings = entryData.servings
     await entry.save()

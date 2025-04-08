@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { MealEntry } from '@/models/MealEntry.js';
+import { daysService } from '@/services/DaysService.js';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -10,11 +11,8 @@ import { computed, onMounted, ref, } from 'vue';
 // NOTE this was originally copied and pasted from Nutrition Info Modal, so there might be extra stuff we can take out
 
 const food = computed(() => AppState.activeFood)
-
 const serving = computed(() => AppState.activeFoodServingSize)
-
 const mealEntryId = computed(() => AppState.activeMealEntryId)
-
 
 // defineProps({
 //   mealEntry: { type: MealEntry, required: true }
@@ -40,11 +38,23 @@ function resetServingSize() {
 
 async function changeServings() {
   try {
-
-    await mealsService.changeServings(mealEntryId, serving.value)
+    await mealsService.changeServings(mealEntryId.value, serving.value)
+    // await daysService.updateDay(day.value.id)
   } catch (error) {
-    Pop.error('couldnt change the serving amounts', error)
-    logger.log('nice try. but we cant change the serving amount', error)
+    Pop.error(error, `couldn't change the serving amounts`)
+    logger.error('nice try. but we cant change the serving amount', error)
+  }
+}
+async function deleteEntry() {
+  try {
+    const confirmed = await Pop.confirm('Are you sure you want to delete this meal entry?', 'If you do, it will be gone forever', 'YES', 'NO')
+    if (!confirmed) {
+      return
+    }
+    await mealsService.deleteEntry(mealEntryId.value)
+  } catch (error) {
+    Pop.error(error, 'Could not delete meal entry')
+    logger.error('COULD NOT DELETE MEAN ENTRY', error)
   }
 }
 
@@ -59,7 +69,6 @@ async function addFoodToDay(food) {
     logger.log('could not log food', error)
   }
 }
-
 </script>
 
 
@@ -148,9 +157,12 @@ async function addFoodToDay(food) {
             </p>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-between">
+          <button @click="deleteEntry()" type="button" title="Delete meal entry" class="btn btn-danger text-light"
+            data-bs-dismiss="modal">Delete</button>
 
-          <button @click="changeServings()" type="button" class="btn btn-primary text-light">Save
+          <button @click="changeServings()" type="button" class="btn btn-primary text-light"
+            data-bs-dismiss="modal">Save
             Changes</button>
         </div>
       </div>
