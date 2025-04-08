@@ -1,6 +1,6 @@
 import { logger } from "@/utils/Logger.js"
 import { api, spoonacularApi } from "./AxiosService.js"
-import { ActiveMeal, Meal } from "@/models/Meal.js"
+import { ActiveMeal, Meal, Recipe } from "@/models/Meal.js"
 import { AppState } from "@/AppState.js"
 import { MealEntry } from "@/models/MealEntry.js"
 
@@ -36,19 +36,26 @@ class MealsService {
   async getRecipesByQuery(searchQuery) {
     const response = await spoonacularApi.get(`recipes/complexSearch?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
-    const recipes = response.data.results.map(ing => new Meal(ing))
+    const recipes = response.data.results.map(recipe => new Recipe(recipe))
     AppState.searchedFoods = recipes
   }
 
-  async getDetailsById(id, unit) {
+  async getIngredientDetailsById(id, unit) {
     AppState.activeFood = null
     const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
     logger.log('here is your detailed food', response.data)
     const food = new ActiveMeal(response.data)
     AppState.activeFood = food
-
-
   }
+
+  async getRecipeDetailsById(food) {
+    AppState.activeFood = null
+    const response = await spoonacularApi.get(`recipes/${food.id}/information?includeNutrition=true`)
+    logger.log('here is your detailed food', response.data)
+    const recipe = new Recipe(response.data)
+    AppState.activeFood = recipe
+  }
+
   resetServingSize() {
     AppState.activeFoodServingSize = 1
   }

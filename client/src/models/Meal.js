@@ -37,6 +37,15 @@ export class Meal {
   }
 }
 
+export class Recipe extends Meal {
+  constructor(data) {
+    super(data);
+    this.extendedIngredients = data.extendedIngredients
+    this.sourceName = data.sourceName
+    this.sourceUrl = data.sourceUrl
+  }
+}
+
 export class ActiveMeal extends Meal {
   constructor(data) {
     super(data)
