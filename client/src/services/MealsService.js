@@ -17,6 +17,7 @@ class MealsService {
 
   async getRecipesByQuery(searchQuery) {
     const response = await spoonacularApi.get(`recipes/complexSearch?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
+    logger.log(response.data)
     const recipes = response.data.results.map(ing => new Meal(ing))
     AppState.searchedFoods = recipes
   }
