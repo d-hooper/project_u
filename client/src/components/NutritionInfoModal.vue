@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { accountService } from '@/services/AccountService.js';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -29,7 +30,15 @@ function resetServingSize() {
   mealsService.resetServingSize()
 }
 
-
+async function addFoodToFavorites(food) {
+  try {
+    await accountService.addFoodToFavorites(food)
+  }
+  catch (error) {
+    Pop.error(error, 'could not favorite this food');
+    logger.log('could not favorite food', error)
+  }
+}
 
 async function addFoodToDay(food) {
   try {
@@ -132,8 +141,9 @@ async function addFoodToDay(food) {
             </p>
           </div>
         </div>
-        <div class="modal-footer">
-
+        <div class="modal-footer d-flex justify-content-between">
+          <button @click="addFoodToFavorites(food)" type="button"
+            class="btn btn-primary mdi mdi-heart">Favorite</button>
           <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log
             Food</button>
         </div>
@@ -151,10 +161,6 @@ async function addFoodToDay(food) {
           </div>
         </div>
       </div>
-      <!-- <div v-else>
-        <span>Loading</span>
-        <span class="mdi mdi-loading mdi-spin"></span>
-      </div> -->
     </div>
   </div>
 </template>

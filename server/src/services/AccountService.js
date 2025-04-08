@@ -10,7 +10,7 @@ import { dbContext } from '../db/DbContext.js'
 async function createAccountIfNeeded(account, user) {
   if (!account) {
     user._id = user.id
-    if(typeof user.name == 'string' && user.name.includes('@')){
+    if (typeof user.name == 'string' && user.name.includes('@')) {
       user.name = user.nickname
     }
     account = await dbContext.Account.create({
@@ -41,12 +41,15 @@ function sanitizeBody(body) {
   const writable = {
     name: body.name,
     picture: body.picture,
-    calorieGoal:  body.calorieGoal
+    calorieGoal: body.calorieGoal
   }
   return writable
 }
 
 class AccountService {
+  // async favoriteMeal(mealData, accountId) {
+  //   const meal = await dbContext.Account.findById()
+  // }
   /**
    * Returns a user account from the Auth0 user object
    *

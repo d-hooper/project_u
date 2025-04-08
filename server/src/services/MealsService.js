@@ -1,8 +1,17 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 import { daysService } from "./DaysService.js"
 import { mealEntriesService } from "./MealEntriesService.js"
 
 class MealsService {
+  async favoriteMeal(mealData, userInfo) {
+    if (mealData.accountId != userInfo.id) {
+      throw new Forbidden('You cannot favorite a meal for someone else, bucko')
+    }
+
+    const meal = await dbContext.FavoriteMeal.create(mealData)
+    return meal
+  }
   async getOrCreateMeal(mealData, userInfo) {
     let meal = await dbContext.Meal.findOne({ spoonacularMealId: mealData.spoonacularMealId })
 

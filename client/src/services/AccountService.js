@@ -12,6 +12,10 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  async addFoodToFavorites(food) {
+    const response = await api.put(`account/meal`)
+  }
 }
 
 export const accountService = new AccountService()

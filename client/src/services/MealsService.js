@@ -8,6 +8,7 @@ import { MealEntry } from "@/models/MealEntry.js"
 
 
 class MealsService {
+ 
   async deleteEntry(id) {
     const response = await api.delete(`mealDay/${id}`)
     logger.log('here is your deleted meal entry', response.data)

@@ -6,6 +6,7 @@ import { logger } from '@/utils/Logger.js';
 import { daysService } from '@/services/DaysService.js';
 import { mealsService } from '@/services/MealsService.js';
 import MealEntryModal from '@/components/MealEntryModal.vue';
+import SearchedFood from '@/components/SearchedFood.vue';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
@@ -152,6 +153,18 @@ async function getDetailsById(mealEntry) {
             </div>
 
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container">
+    <h1>
+      Saved meals
+    </h1>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+        <div>
+          <SearchedFood />
         </div>
       </div>
     </div>
