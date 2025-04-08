@@ -14,10 +14,6 @@ const food = computed(() => AppState.activeFood)
 const serving = computed(() => AppState.activeFoodServingSize)
 const mealEntryId = computed(() => AppState.activeMealEntryId)
 
-// defineProps({
-//   mealEntry: { type: MealEntry, required: true }
-// })
-
 onMounted(() => {
   const myModalId = document.getElementById('MealEntryModal')
   myModalId.addEventListener('hidden.bs.modal', event => {
