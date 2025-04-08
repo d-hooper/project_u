@@ -24,7 +24,7 @@ class MealsService {
     const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == mealEntryId)
     AppState.mealEntries.splice(entryIndex, 1, updatedMealEntry)
   }
-  
+
   async getFoodItemsByQuery(searchQuery) {
     const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
