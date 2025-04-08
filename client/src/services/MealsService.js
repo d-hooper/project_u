@@ -13,7 +13,7 @@ class MealsService {
   async changeServings(mealEntryId, serving) {
     const updatedMealEntry = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
     logger.log(updatedMealEntry)
-
+  }
   async getFoodItemsByQuery(searchQuery) {
     const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
