@@ -2,11 +2,29 @@ import { logger } from "@/utils/Logger.js"
 import { api, spoonacularApi } from "./AxiosService.js"
 import { ActiveMeal, Meal } from "@/models/Meal.js"
 import { AppState } from "@/AppState.js"
+import { MealEntry } from "@/models/MealEntry.js"
 
 
 
 
 class MealsService {
+  async deleteEntry(id) {
+    const response = await api.delete(`mealDay/${id}`)
+    logger.log('here is your deleted meal entry', response.data)
+    const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == id)
+    AppState.mealEntries.splice(entryIndex, 1,)
+  }
+  setActiveMealEntryId(mealEntryId) {
+    AppState.activeMealEntryId = mealEntryId
+  }
+  async changeServings(mealEntryId, serving) {
+    const response = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
+    const updatedMealEntry = new MealEntry(response.data)
+    // logger.log(updatedMealEntry)
+    const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == mealEntryId)
+    AppState.mealEntries.splice(entryIndex, 1, updatedMealEntry)
+  }
+  
   async getFoodItemsByQuery(searchQuery) {
     const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
@@ -28,6 +46,7 @@ class MealsService {
     logger.log('here is your detailed food', response.data)
     const food = new ActiveMeal(response.data)
     AppState.activeFood = food
+
 
   }
   resetServingSize() {

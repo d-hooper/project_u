@@ -5,6 +5,7 @@ export class MealEntry {
     this.accountId = data.accountId
     this.meal = data.meal
     this.servings = data.servings
+    this.unit = data.unit
 
   }
 

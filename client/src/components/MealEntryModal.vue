@@ -1,18 +1,21 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { MealEntry } from '@/models/MealEntry.js';
+import { daysService } from '@/services/DaysService.js';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 import { computed, onMounted, ref, } from 'vue';
 
+// NOTE this was originally copied and pasted from Nutrition Info Modal, so there might be extra stuff we can take out
 
 const food = computed(() => AppState.activeFood)
-
 const serving = computed(() => AppState.activeFoodServingSize)
+const mealEntryId = computed(() => AppState.activeMealEntryId)
 
 onMounted(() => {
-  const myModalId = document.getElementById('NutritionInfoModal')
+  const myModalId = document.getElementById('MealEntryModal')
   myModalId.addEventListener('hidden.bs.modal', event => {
     resetServingSize()
   })
@@ -29,7 +32,27 @@ function resetServingSize() {
   mealsService.resetServingSize()
 }
 
-
+async function changeServings() {
+  try {
+    await mealsService.changeServings(mealEntryId.value, serving.value)
+    // await daysService.updateDay(day.value.id)
+  } catch (error) {
+    Pop.error(error, `couldn't change the serving amounts`)
+    logger.error('nice try. but we cant change the serving amount', error)
+  }
+}
+async function deleteEntry() {
+  try {
+    const confirmed = await Pop.confirm('Are you sure you want to delete this meal entry?', 'If you do, it will be gone forever', 'YES', 'NO')
+    if (!confirmed) {
+      return
+    }
+    await mealsService.deleteEntry(mealEntryId.value)
+  } catch (error) {
+    Pop.error(error, 'Could not delete meal entry')
+    logger.error('COULD NOT DELETE MEAN ENTRY', error)
+  }
+}
 
 async function addFoodToDay(food) {
   try {
@@ -42,18 +65,16 @@ async function addFoodToDay(food) {
     logger.log('could not log food', error)
   }
 }
-
 </script>
 
 
 <template>
   <!-- inert? -->
-  <div class="modal fade" id="NutritionInfoModal" tabindex="-1" aria-labelledby="NutritionInfoModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="MealEntryModal" tabindex="-1" aria-labelledby="MealEntryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="NutritionInfoModalLabel">{{ food.name }}</h1>
+          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="MealEntryModalLabel">{{ food.name }}</h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
@@ -82,7 +103,7 @@ async function addFoodToDay(food) {
             </p>
             <p v-else class="border border-indigo rounded ps-2">
               Calories:
-              {{ food.calories.amount.toFixed() * serving }}
+              {{ food.calories.amount.toFixed(2) * serving }}
               {{ food.calories.unit }}
             </p>
             <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-indigo rounded ps-2">
@@ -132,15 +153,18 @@ async function addFoodToDay(food) {
             </p>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-between">
+          <button @click="deleteEntry()" type="button" title="Delete meal entry" class="btn btn-danger text-light"
+            data-bs-dismiss="modal">Delete</button>
 
-          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log
-            Food</button>
+          <button @click="changeServings()" type="button" class="btn btn-primary text-light"
+            data-bs-dismiss="modal">Save
+            Changes</button>
         </div>
       </div>
       <div v-else class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="NutritionInfoModalLabel"></h1>
+          <h1 class="modal-title fs-5" id="MealEntryModalLabel"></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
         </div>

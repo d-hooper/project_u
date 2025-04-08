@@ -4,10 +4,13 @@ import { AppState } from '../AppState.js';
 import { Pop } from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
 import { daysService } from '@/services/DaysService.js';
+import { mealsService } from '@/services/MealsService.js';
+import MealEntryModal from '@/components/MealEntryModal.vue';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
 const mealEntries = computed(() => AppState.mealEntries)
+const food = computed(() => AppState.activeFood)
 const days = computed(() => AppState.days)
 
 onMounted(() => {
@@ -49,6 +52,22 @@ async function getDayById(dayId) {
   }
 }
 
+async function getDetailsById(mealEntry) {
+  try {
+    const mealId = mealEntry.meal.spoonacularMealId
+    const mealUnit = mealEntry.meal.unit
+    const mealEntryId = mealEntry.id
+    mealsService.setActiveMealEntryId(mealEntryId)
+    await mealsService.getDetailsById(mealId, mealUnit)
+  }
+  catch (error) {
+    Pop.error(error, 'Could not get food details')
+    logger.error('COULD NOT GET FOOD DETAILS', error)
+  }
+}
+
+
+
 </script>
 
 <template>
@@ -81,13 +100,20 @@ async function getDayById(dayId) {
                   </tr>
                 </thead>
                 <tbody v-if="mealEntries">
-                  <tr v-for="mealEntry in mealEntries" :key="mealEntry.id">
+                  <tr v-for="mealEntry in mealEntries" @click="getDetailsById(mealEntry)" :key="mealEntry.id"
+                    role="button" :title="`View or edit meal entry for ${mealEntry.meal.name}`" data-bs-toggle="modal"
+                    data-bs-target="#MealEntryModal">
                     <th scope="row" class="text-capitalize">
                       <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
                       {{ mealEntry.meal.name }}
                     </th>
-                    <td>{{ mealEntry.servings }}</td>
+                    <td>
+                      <span class="serving-number">
+                        {{ mealEntry.servings }}
+                      </span>
+                    </td>
                     <td>{{ mealEntry.meal.calorieCount * mealEntry.servings }}</td>
+
                   </tr>
                 </tbody>
                 <tfoot>
@@ -115,7 +141,7 @@ async function getDayById(dayId) {
             <div @click="getDayById(day.id)" class="card text-center" role="button">
               <div class="day-card d-flex justify-content-center flex-column">
                 <span
-                      :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>
+                  :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>
                 <div>
                   <p class="mb-0 fs-3">{{ day.day.toLocaleDateString() }}</p>
                 </div>
@@ -124,11 +150,13 @@ async function getDayById(dayId) {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
+  <MealEntryModal />
 </template>
 
 <style scoped lang="scss">
@@ -153,6 +181,10 @@ thead {
 
 tr {
   border-bottom: 3px solid var(--bs-primary);
+}
+
+tbody tr:hover {
+  background: #aeb2b65c;
 }
 
 td,
