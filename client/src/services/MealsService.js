@@ -36,7 +36,7 @@ class MealsService {
   async getRecipesByQuery(searchQuery) {
     const response = await spoonacularApi.get(`recipes/complexSearch?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
-    const recipes = response.data.results.map(recipe => new Recipe(recipe))
+    const recipes = response.data.results.map(recipe => new Meal(recipe))
     AppState.searchedFoods = recipes
   }
 
@@ -60,7 +60,7 @@ class MealsService {
     AppState.activeFoodServingSize = 1
   }
   decreaseServingSize() {
-    if (AppState.activeFoodServingSize == 0) {
+    if (AppState.activeFoodServingSize == 1) {
       return
     }
     AppState.activeFoodServingSize--

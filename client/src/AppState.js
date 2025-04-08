@@ -16,6 +16,7 @@ export const AppState = reactive({
   days: [],
   activeFoodServingSize: 1,
   /** @type {import('./models/MealEntry.js').MealEntry[]} user info from the database*/
-  mealEntries: []
+  mealEntries: [],
+  activeMealEntryId: null
 })
 

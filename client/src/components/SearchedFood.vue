@@ -34,7 +34,8 @@ async function getDetailsById(food) {
        data-bs-toggle="modal" data-bs-target="#NutritionInfoModal" type="button">
     <div class="d-flex align-items-center justify-content-evenly flex-column">
       <div class="card-body card-image-body">
-        <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="food-search-img" role="button">
+        <img :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="food-search-img" role="button"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
 
       </div>
       <div class="card-body card-title-body d-flex align-items-center justify-content-center">
