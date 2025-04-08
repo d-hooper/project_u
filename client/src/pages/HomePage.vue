@@ -5,13 +5,20 @@ import SearchedFood from '@/components/SearchedFood.vue';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const editableSearchData = ref('')
 const foods = computed(() => AppState.searchedFoods)
 const searchOptions = ['food', 'recipes', 'exercises']
-const activeSearchOption = ref('food')
+const route = useRoute()
+
+let activeSearchOption = route.query.type
 let searchBackground = ref('https://images.unsplash.com/photo-1479150928156-423a69d91fe0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+
+onUnmounted(() => {
+  foods.value == []
+})
 
 onMounted(() => {
   setSearchBackground()
@@ -19,15 +26,15 @@ onMounted(() => {
 // NOTE we could later have a function run onMounted to get most recent searches/previously used foods
 
 function setActiveSearchOption(option) {
-  activeSearchOption.value = option
+  activeSearchOption = option
   this.setSearchBackground()
 }
 
 function setSearchBackground() {
-  if (activeSearchOption.value == 'food') {
+  if (activeSearchOption == 'food') {
     searchBackground.value = 'https://images.unsplash.com/photo-1479150928156-423a69d91fe0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
-  if (activeSearchOption.value == 'recipes') {
+  if (activeSearchOption == 'recipes') {
     searchBackground.value = 'https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?q=80&w=2092&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
 }
@@ -35,16 +42,17 @@ function setSearchBackground() {
 async function getItemsByQuery() {
   try {
     const searchQuery = editableSearchData.value
-    if (activeSearchOption.value == 'food') {
+    if (activeSearchOption == 'food') {
       await mealsService.getFoodItemsByQuery(searchQuery)
     }
-    if (activeSearchOption.value == 'recipes') {
+    if (activeSearchOption == 'recipes') {
       await mealsService.getRecipesByQuery(searchQuery)
     }
+    editableSearchData.value = ''
   }
   catch (error) {
-    Pop.error(error, 'Could not get food item(s) by search query');
-    logger.error('Could not get food item(s) by search query'.toUpperCase(), error)
+    Pop.error(error, 'Could not return item(s) from search query');
+    logger.error('Could not return item(s) from search query'.toUpperCase(), error)
   }
 }
 

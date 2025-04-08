@@ -49,83 +49,86 @@ async function addFoodToDay(food) {
 <template>
   <!-- inert? -->
   <div class="modal fade" id="NutritionInfoModal" tabindex="-1" aria-labelledby="NutritionInfoModalLabel"
-    aria-hidden="true">
+       aria-hidden="true">
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="NutritionInfoModalLabel">{{ food.name }}</h1>
+          <h1 class="modal-title fs-5 text-capitalize text-primary fw-bold" id="NutritionInfoModalLabel">{{ food.name }}
+          </h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+                  aria-label="Close"></button>
         </div>
         <div class="modal-body pt-0">
           <div class="text-center my-5">
-            <img class="shadow rounded-5" :src="`${food.imageBaseUrl}` + '_250x250/' + `${food.image}`" alt="">
+            <img class="shadow rounded-5 img-fluid" :src="food.medImageURL" :alt="food.name"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
           </div>
-          <div class="fs-4 text-indigo">
-            <div class="d-flex justify-content-between rounded ps-2 ">
-              <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong
-              }}: 1
+          <div class="fs-4 text-dark">
+            <div
+                 class="d-flex justify-content-between rounded text-capitalize rounded border-primary text-primary fw-bold">
+              <p v-if="food.unitLong">{{ food.unitLong
+              }}(s)
               </p>
-              <p v-else class="text-capitalize border border-indigo rounded ps-2">{{ food.theUnit }}: 1</p>
+              <p v-else>{{ food.theUnit || 'Serving(s)' }}</p>
               <div class="d-flex gap-2">
                 <span @click="decreaseServingSize()" type="button" title="decrease serving"
-                  class="mdi mdi-minus-circle"></span>
+                      class="mdi mdi-minus-circle"></span>
                 <p>{{ serving }}</p>
                 <span @click="increaseServingSize()" type="button" title="increase serving"
-                  class="mdi mdi-plus-circle"></span>
+                      class="mdi mdi-plus-circle"></span>
               </div>
             </div>
-            <p v-if="food.calories && food.calories.amount > 1" class="border border-indigo rounded ps-2">
+            <p v-if="food.calories && food.calories.amount > 1" class="border border-primary rounded ps-2">
               Calories:
               {{ food.calories.amount.toFixed(0) * serving }}
               {{ food.calories.unit }}
             </p>
-            <p v-else class="border border-indigo rounded ps-2">
+            <p v-else class="border border-primary rounded ps-2">
               Calories:
               {{ food.calories.amount.toFixed() * serving }}
               {{ food.calories.unit }}
             </p>
-            <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-primary rounded ps-2">
               Carbohydrates:
               {{ food.carbohydrates.amount.toFixed(0) * serving }}
               {{ food.carbohydrates.unit }}
             </p>
-            <p v-if="food.protein && food.protein.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.protein && food.protein.amount > .5" class="border border-primary rounded ps-2">
               Protein:
               {{ food.protein.amount.toFixed(0) * serving }}
               {{ food.protein.unit }}
             </p>
-            <p v-if="food.fat && food.fat.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.fat && food.fat.amount > .5" class="border border-primary rounded ps-2">
               Fat:
               {{ food.fat.amount.toFixed(0) * serving }}
               {{ food.fat.unit }}
             </p>
-            <p v-if="food.sugar && food.sugar.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.sugar && food.sugar.amount > .5" class="border border-primary rounded ps-2">
               Sugar:
               {{ food.sugar.amount.toFixed(0) * serving }}
               {{ food.sugar.unit }}
             </p>
-            <p v-if="food.sodium && food.sodium.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.sodium && food.sodium.amount > .5" class="border border-primary rounded ps-2">
               Sodium:
               {{ food.sodium.amount.toFixed(0) * serving }}
               {{ food.sodium.unit }}
             </p>
-            <p v-if="food.iron && food.iron.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.iron && food.iron.amount > .5" class="border border-primary rounded ps-2">
               Iron:
               {{ food.iron.amount.toFixed(0) * serving }}
               {{ food.iron.unit }}
             </p>
-            <p v-if="food.calcium && food.calcium.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.calcium && food.calcium.amount > .5" class="border border-primary rounded ps-2">
               Calcium:
               {{ food.calcium.amount.toFixed(0) * serving }}
               {{ food.calcium.unit }}
             </p>
-            <p v-if="food.caffeine && food.caffeine.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.caffeine && food.caffeine.amount > .5" class="border border-primary rounded ps-2">
               Caffeine:
               {{ food.caffeine.amount.toFixed(0) * serving }}
               {{ food.caffeine.unit }}
             </p>
-            <p v-if="food.cholesterol && food.cholesterol.amount > .5" class="border border-indigo rounded ps-2">
+            <p v-if="food.cholesterol && food.cholesterol.amount > .5" class="border border-primary rounded ps-2">
               Cholesterol:
               {{ food.cholesterol.amount.toFixed(0) * serving }}
               {{ food.cholesterol.unit }}
@@ -134,7 +137,7 @@ async function addFoodToDay(food) {
         </div>
         <div class="modal-footer">
 
-          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log
+          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow">Log
             Food</button>
         </div>
       </div>
