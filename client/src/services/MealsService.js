@@ -7,6 +7,13 @@ import { AppState } from "@/AppState.js"
 
 
 class MealsService {
+  setActiveMealEntryId(mealEntryId) {
+    AppState.activeMealEntryId = mealEntryId
+  }
+  async changeServings(mealEntryId, serving) {
+    const updatedMealEntry = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
+    logger.log(updatedMealEntry)
+
   async getFoodItemsByQuery(searchQuery) {
     const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
@@ -28,6 +35,7 @@ class MealsService {
     logger.log('here is your detailed food', response.data)
     const food = new ActiveMeal(response.data)
     AppState.activeFood = food
+
 
   }
   resetServingSize() {

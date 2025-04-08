@@ -90,6 +90,7 @@ async function getItemsByQuery() {
     </div>
   </section>
   <NutritionInfoModal />
+
 </template>
 
 <style scoped lang="scss">
