@@ -24,6 +24,31 @@ class MealsService {
     const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == mealEntryId)
     AppState.mealEntries.splice(entryIndex, 1, updatedMealEntry)
   }
+  
+  async getFoodItemsByQuery(searchQuery) {
+    const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
+    logger.log(response.data)
+    const ingredients = response.data.results.map(ing => new Meal(ing))
+    AppState.searchedFoods = ingredients
+    logger.log(AppState.searchedFoods)
+  }
+
+  async getRecipesByQuery(searchQuery) {
+    const response = await spoonacularApi.get(`recipes/complexSearch?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
+    logger.log(response.data)
+    const recipes = response.data.results.map(ing => new Meal(ing))
+    AppState.searchedFoods = recipes
+  }
+
+  async getDetailsById(id, unit) {
+    AppState.activeFood = null
+    const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
+    logger.log('here is your detailed food', response.data)
+    const food = new ActiveMeal(response.data)
+    AppState.activeFood = food
+
+
+  }
   resetServingSize() {
     AppState.activeFoodServingSize = 1
   }

@@ -103,7 +103,7 @@ async function addFoodToDay(food) {
             </p>
             <p v-else class="border border-indigo rounded ps-2">
               Calories:
-              {{ food.calories.amount * serving }}
+              {{ food.calories.amount.toFixed(2) * serving }}
               {{ food.calories.unit }}
             </p>
             <p v-if="food.carbohydrates && food.carbohydrates.amount > .5" class="border border-indigo rounded ps-2">
