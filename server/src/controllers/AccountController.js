@@ -2,6 +2,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService.js'
 import BaseController from '../utils/BaseController.js'
 import { daysService } from '../services/DaysService.js'
+import { mealsService } from '../services/MealsService.js'
 
 export class AccountController extends BaseController {
   constructor() {
@@ -11,7 +12,9 @@ export class AccountController extends BaseController {
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
       .get('/days', this.getDaysByAccountId)
+
   }
+
 
   async getUserAccount(req, res, next) {
     try {

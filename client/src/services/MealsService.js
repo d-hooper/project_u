@@ -3,11 +3,18 @@ import { api, spoonacularApi } from "./AxiosService.js"
 import { ActiveMeal, Meal, Recipe } from "@/models/Meal.js"
 import { AppState } from "@/AppState.js"
 import { MealEntry } from "@/models/MealEntry.js"
+import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 
 
 class MealsService {
+  async getFavoriteMeals() {
+    const response = await api.get('favorites/meal')
+    logger.log(response.data)
+    const favorites = response.data.map(pojo => new FavoriteMeal(pojo))
+    AppState.favoriteMeals = favorites
+  }
   async deleteEntry(id) {
     const response = await api.delete(`mealDay/${id}`)
     logger.log('here is your deleted meal entry', response.data)
@@ -25,7 +32,6 @@ class MealsService {
     const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == mealEntryId)
     AppState.mealEntries.splice(entryIndex, 1, updatedMealEntry)
   }
-
   async getFoodItemsByQuery(searchQuery) {
     const response = await spoonacularApi.get(`food/ingredients/search?query=${searchQuery}&minCalories=50&number=100&metaInformation=true`)
     logger.log(response.data)
@@ -74,9 +80,6 @@ class MealsService {
     logger.log(response.data)
     AppState.activeFoodServingSize = 1
   }
-
-
-  // &minCalories=50
 
 }
 

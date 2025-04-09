@@ -12,6 +12,10 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+  // TODO favoriteMeal model to send the right payload!
+  async addFoodToFavorites(food) {
+    const response = await api.post(`account/meal`, food)
+  }
 }
 
 export const accountService = new AccountService()
