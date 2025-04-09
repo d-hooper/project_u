@@ -4,6 +4,10 @@ import { daysService } from "./DaysService.js"
 import { mealEntriesService } from "./MealEntriesService.js"
 
 class MealsService {
+  async getFavoriteMeal(userInfo) {
+    const meals = await dbContext.FavoriteMeal.find({ accountId: userInfo.id })
+    return meals
+  }
   async favoriteMeal(mealData, userInfo) {
     if (mealData.accountId != userInfo.id) {
       throw new Forbidden('You cannot favorite a meal for someone else, bucko')

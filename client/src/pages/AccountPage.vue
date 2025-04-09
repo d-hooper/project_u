@@ -7,16 +7,21 @@ import { daysService } from '@/services/DaysService.js';
 import { mealsService } from '@/services/MealsService.js';
 import MealEntryModal from '@/components/MealEntryModal.vue';
 import SearchedFood from '@/components/SearchedFood.vue';
+import { FavoriteMeal } from '@/models/FavoriteMeal.js';
+import FavoriteMeals from '@/components/FavoriteMealCard.vue';
+import FavoriteMealCard from '@/components/FavoriteMealCard.vue';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
 const mealEntries = computed(() => AppState.mealEntries)
 const food = computed(() => AppState.activeFood)
 const days = computed(() => AppState.days)
+const favoriteMeals = computed(() => AppState.favoriteMeals)
 
 onMounted(() => {
   getOrCreateCurrentDay()
   getDaysByAccountId()
+  getFavoriteMeals()
 })
 
 async function getOrCreateCurrentDay() {
@@ -69,6 +74,16 @@ async function getDetailsById(mealEntry) {
 
 
 
+
+async function getFavoriteMeals() {
+  try {
+    await mealsService.getFavoriteMeals()
+  }
+  catch (error) {
+    Pop.error(error, 'couldnt get favorite meals');
+    logger.error('could not get favorite foods', error)
+  }
+}
 </script>
 
 <template>
@@ -157,16 +172,19 @@ async function getDetailsById(mealEntry) {
       </div>
     </div>
   </section>
-  <section class="container">
+  <section v-if="favoriteMeals" class="container">
     <h1>
       Saved meals
     </h1>
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-        <div>
-          <SearchedFood />
-        </div>
+
+
+      <div v-for="meal in favoriteMeals" :key="meal.id" class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+
+        <FavoriteMealCard :meals="meal" />
+
       </div>
+
     </div>
   </section>
   <MealEntryModal />

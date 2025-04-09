@@ -10,18 +10,10 @@ export const AccountSchema = new Schema(
     // NOTE If you wish to add additional properties do so here
     calorieGoal: { type: Number, min: 100, max: 7000, required: true, default: 2000 },
     hasPremium: { type: Boolean, default: false, required: true },
-    favoriteMeals: { type: Array, required: false },
+    // favoriteMeals: { type: Array, required: false },
     favoriteExercises: { type: Array, required: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
-AccountSchema.virtual('favoriteMeal',
-  {
-    localField: 'favoriteMeals',
-    foreignField: '_id',
-    justOne: false,
-    ref: 'Meal'
-  }
-)
 

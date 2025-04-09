@@ -12,25 +12,9 @@ export class AccountController extends BaseController {
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
       .get('/days', this.getDaysByAccountId)
-      .get('/meal', this.getFavoriteMeal)
-      .post('/meal', this.favoriteMeal)
-  }
-  getFavoriteMeal(request, response, next) {
-    throw new Error('Method not implemented.')
-  }
-  async favoriteMeal(request, response, next) {
-    try {
-      const userInfo = request.userInfo
 
-
-      const mealData = request.body
-      mealData.accountId = userInfo.id
-      const meal = await mealsService.favoriteMeal(mealData, userInfo)
-      response.send(meal)
-    } catch (error) {
-      next(error)
-    }
   }
+
 
   async getUserAccount(req, res, next) {
     try {
