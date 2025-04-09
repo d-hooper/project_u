@@ -53,18 +53,6 @@ async function deleteEntry() {
     logger.error('COULD NOT DELETE MEAN ENTRY', error)
   }
 }
-
-async function addFoodToDay(food) {
-  try {
-
-    await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value, unit: food.theUnit })
-    Pop.success(`You successfully added ${food.name} to your calorie count!`)
-  }
-  catch (error) {
-    Pop.error(error, 'could not log food!');
-    logger.log('could not log food', error)
-  }
-}
 </script>
 
 
@@ -76,7 +64,7 @@ async function addFoodToDay(food) {
         <div class="modal-header">
           <h1 class="modal-title fs-5 text-capitalize text-indigo" id="MealEntryModalLabel">{{ food.name }}</h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+                  aria-label="Close"></button>
         </div>
         <div class="modal-body pt-0">
           <div class="text-center my-5">
@@ -84,16 +72,18 @@ async function addFoodToDay(food) {
           </div>
           <div class="fs-4 text-indigo">
             <div class="d-flex justify-content-between rounded ps-2 ">
-              <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong
-              }}: 1
+              <p v-if="food.unitLong" class="text-capitalize">{{ }}: 1
               </p>
-              <p v-else class="text-capitalize border border-indigo rounded ps-2">{{ food.theUnit }}: 1</p>
+              <p v-else class="text-capitalize border border-indigo rounded ps-2">
+                {{ food.unit ? `${food.theUnit + ': 1'}` :
+                  'Serving(s):' }}
+              </p>
               <div class="d-flex gap-2">
                 <span @click="decreaseServingSize()" type="button" title="decrease serving"
-                  class="mdi mdi-minus-circle"></span>
+                      class="mdi mdi-minus-circle"></span>
                 <p>{{ serving }}</p>
                 <span @click="increaseServingSize()" type="button" title="increase serving"
-                  class="mdi mdi-plus-circle"></span>
+                      class="mdi mdi-plus-circle"></span>
               </div>
             </div>
             <p v-if="food.calories && food.calories.amount > 1" class="border border-indigo rounded ps-2">
@@ -155,10 +145,10 @@ async function addFoodToDay(food) {
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button @click="deleteEntry()" type="button" title="Delete meal entry" class="btn btn-danger text-light"
-            data-bs-dismiss="modal">Delete</button>
+                  data-bs-dismiss="modal">Delete</button>
 
           <button @click="changeServings()" type="button" class="btn btn-primary text-light"
-            data-bs-dismiss="modal">Save
+                  data-bs-dismiss="modal">Save
             Changes</button>
         </div>
       </div>

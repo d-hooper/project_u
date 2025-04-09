@@ -70,7 +70,7 @@ class MealsService {
   }
   async addMealToDay(meal) {
     const response = await api.post(`mealDay/entry`, meal)
-    logger.log()
+    logger.log(response.data)
     AppState.activeFoodServingSize = 1
   }
 

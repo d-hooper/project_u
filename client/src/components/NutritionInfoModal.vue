@@ -30,10 +30,12 @@ function resetServingSize() {
 }
 
 
-
 async function addFoodToDay(food) {
   try {
+    if (!food.unit) {
 
+      await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value })
+    }
     await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value, unit: food.theUnit })
     Pop.success(`You successfully added ${food.name} to your calorie count!`)
   }
@@ -134,11 +136,13 @@ async function addFoodToDay(food) {
               {{ food.cholesterol.unit }}
             </p>
           </div>
+          <div>
+            <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow">Log
+              Food</button>
+          </div>
         </div>
         <div class="modal-footer">
 
-          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow">Log
-            Food</button>
         </div>
       </div>
       <div v-else class="modal-content">
