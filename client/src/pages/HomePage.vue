@@ -66,24 +66,26 @@ async function getItemsByQuery() {
              :style="{ backgroundImage: `url(${searchBackground})` }">
 
           <form @submit.prevent="getItemsByQuery()" class="mx-3 w-100">
-            <div class="form-floating mb-3 d-flex">
-              <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput">
+            <div class="form-floating mb-3 input-group d-flex">
+              <input v-model="editableSearchData" type="text" class="form-control rounded-start" id="floatingInput">
               <label v-if="activeSearchOption == 'food'" for="floatingInput">Search for food</label>
               <label v-else-if="activeSearchOption == 'recipes'" for="floatingInput">Search for recipes</label>
               <label v-else for="floatingInput">Search for exercises</label>
-              <div class="text-end">
-                <button class="btn btn-grey h-100 text-light text-shadow" type="submit"
-                        :title="`Search for ${activeSearchOption}`">
-                  Search
-                </button>
-              </div>
+              <button class="btn btn-grey text-light text-shadow" type="submit"
+                      :title="`Search for ${activeSearchOption}`">
+                Search
+              </button>
             </div>
           </form>
           <div class="mt-2">
-            <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Food</button>
-            <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Recipes</button>
+            <RouterLink :to="{ query: { type: 'food' } }">
+              <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Food</button>
+            </RouterLink>
+            <RouterLink :to="{ query: { type: 'recipes' } }">
+              <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Recipes</button>
+            </RouterLink>
           </div>
         </div>
       </div>

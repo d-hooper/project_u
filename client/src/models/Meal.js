@@ -6,6 +6,7 @@ export class Meal {
     this.name = data.name || data.title
     this.image = data.image
     this.possibleUnits = data.possibleUnits
+    this.isRecipe = data.isRecipe
     // this.calories = data.nutrition.nutrients.amount
 
   }
@@ -66,4 +67,5 @@ export class Recipe extends ActiveMeal {
     this.sourceName = data.sourceName
     this.sourceUrl = data.sourceUrl
   }
+  isRecipe = true
 }

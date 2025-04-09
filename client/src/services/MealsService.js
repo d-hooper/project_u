@@ -17,6 +17,7 @@ class MealsService {
   setActiveMealEntryId(mealEntryId) {
     AppState.activeMealEntryId = mealEntryId
   }
+
   async changeServings(mealEntryId, serving) {
     const response = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
     const updatedMealEntry = new MealEntry(response.data)
@@ -50,10 +51,10 @@ class MealsService {
 
   async getRecipeDetailsById(food) {
     AppState.activeFood = null
-    const response = await spoonacularApi.get(`recipes/${food.id}/information?includeNutrition=true`)
-    logger.log('here is your detailed food', response.data)
+    const response = await spoonacularApi.get(`recipes/${food?.spoonacularMealId || food.id}/information?includeNutrition=true`)
     const recipe = new Recipe(response.data)
     AppState.activeFood = recipe
+    logger.log('here is your detailed food', AppState.activeFood)
   }
 
   resetServingSize() {
@@ -70,7 +71,7 @@ class MealsService {
   }
   async addMealToDay(meal) {
     const response = await api.post(`mealDay/entry`, meal)
-    logger.log()
+    logger.log(response.data)
     AppState.activeFoodServingSize = 1
   }
 
