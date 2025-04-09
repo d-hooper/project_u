@@ -50,10 +50,10 @@ class MealsService {
 
   async getRecipeDetailsById(food) {
     AppState.activeFood = null
-    const response = await spoonacularApi.get(`recipes/${food.id}/information?includeNutrition=true`)
-    logger.log('here is your detailed food', response.data)
+    const response = await spoonacularApi.get(`recipes/${food?.spoonacularMealId || food.id}/information?includeNutrition=true`)
     const recipe = new Recipe(response.data)
     AppState.activeFood = recipe
+    logger.log('here is your detailed food', AppState.activeFood)
   }
 
   resetServingSize() {

@@ -58,6 +58,10 @@ async function getDetailsById(mealEntry) {
     const mealUnit = mealEntry.meal.unit
     const mealEntryId = mealEntry.id
     mealsService.setActiveMealEntryId(mealEntryId)
+    if (mealEntry.meal.isRecipe) {
+      await mealsService.getRecipeDetailsById(mealEntry.meal)
+      return
+    }
     await mealsService.getIngredientDetailsById(mealId, mealUnit)
   }
   catch (error) {

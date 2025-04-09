@@ -80,10 +80,14 @@ async function getItemsByQuery() {
             </div>
           </form>
           <div class="mt-2">
-            <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Food</button>
-            <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Recipes</button>
+            <RouterLink :to="{ query: { type: 'food' } }">
+              <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Food</button>
+            </RouterLink>
+            <RouterLink :to="{ query: { type: 'recipes' } }">
+              <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Recipes</button>
+            </RouterLink>
           </div>
         </div>
       </div>

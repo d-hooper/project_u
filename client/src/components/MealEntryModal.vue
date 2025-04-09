@@ -68,13 +68,13 @@ async function deleteEntry() {
         </div>
         <div class="modal-body pt-0">
           <div class="text-center my-5">
-            <img class="shadow rounded-5" :src="`${food.imageBaseUrl}` + '_250x250/' + `${food.image}`" alt="">
+            <img class="shadow rounded-5 img-fluid" :src="food.image || food.medImageURL" alt="">
           </div>
           <div class="fs-4 text-indigo">
-            <div class="d-flex justify-content-between rounded ps-2 ">
+            <div class="d-flex justify-content-between rounded">
               <p v-if="food.unitLong" class="text-capitalize">{{ }}: 1
               </p>
-              <p v-else class="text-capitalize border border-indigo rounded ps-2">
+              <p v-else class="text-capitalize border border-indigo rounded px-2">
                 {{ food.unit ? `${food.theUnit + ': 1'}` :
                   'Serving(s):' }}
               </p>
