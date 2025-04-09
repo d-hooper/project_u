@@ -6,6 +6,7 @@ export class Meal {
     this.name = data.name || data.title
     this.image = data.image
     this.possibleUnits = data.possibleUnits
+    this.isRecipe = data.isRecipe
     // this.calories = data.nutrition.nutrients.amount
 
   }
@@ -32,6 +33,9 @@ export class Meal {
   }
   // NOTE we could add more potential units for it to find, or later we could have the user change the unit (perhaps using a dropdown)
   get theUnit() {
+    if (!this.possibleUnits) {
+      return ''
+    }
     const unit = this.possibleUnits.find(unit => unit == 'serving') || this.possibleUnits.find(unit => unit == 'piece') || 'g'
     return unit
   }
@@ -55,4 +59,13 @@ export class ActiveMeal extends Meal {
     this.unitLong = data.unitLong
     this.unit = data.unit
   }
+}
+export class Recipe extends ActiveMeal {
+  constructor(data) {
+    super(data);
+    this.extendedIngredients = data.extendedIngredients
+    this.sourceName = data.sourceName
+    this.sourceUrl = data.sourceUrl
+  }
+  isRecipe = true
 }

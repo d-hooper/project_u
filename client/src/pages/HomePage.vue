@@ -5,13 +5,20 @@ import SearchedFood from '@/components/SearchedFood.vue';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const editableSearchData = ref('')
 const foods = computed(() => AppState.searchedFoods)
 const searchOptions = ['food', 'recipes', 'exercises']
-const activeSearchOption = ref('food')
+const route = useRoute()
+
+let activeSearchOption = route.query.type
 let searchBackground = ref('https://images.unsplash.com/photo-1479150928156-423a69d91fe0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+
+onUnmounted(() => {
+  foods.value == []
+})
 
 onMounted(() => {
   setSearchBackground()
@@ -19,15 +26,15 @@ onMounted(() => {
 // NOTE we could later have a function run onMounted to get most recent searches/previously used foods
 
 function setActiveSearchOption(option) {
-  activeSearchOption.value = option
+  activeSearchOption = option
   this.setSearchBackground()
 }
 
 function setSearchBackground() {
-  if (activeSearchOption.value == 'food') {
+  if (activeSearchOption == 'food') {
     searchBackground.value = 'https://images.unsplash.com/photo-1479150928156-423a69d91fe0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
-  if (activeSearchOption.value == 'recipes') {
+  if (activeSearchOption == 'recipes') {
     searchBackground.value = 'https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?q=80&w=2092&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
 }
@@ -35,16 +42,17 @@ function setSearchBackground() {
 async function getItemsByQuery() {
   try {
     const searchQuery = editableSearchData.value
-    if (activeSearchOption.value == 'food') {
+    if (activeSearchOption == 'food') {
       await mealsService.getFoodItemsByQuery(searchQuery)
     }
-    if (activeSearchOption.value == 'recipes') {
+    if (activeSearchOption == 'recipes') {
       await mealsService.getRecipesByQuery(searchQuery)
     }
+    editableSearchData.value = ''
   }
   catch (error) {
-    Pop.error(error, 'Could not get food item(s) by search query');
-    logger.error('Could not get food item(s) by search query'.toUpperCase(), error)
+    Pop.error(error, 'Could not return item(s) from search query');
+    logger.error('Could not return item(s) from search query'.toUpperCase(), error)
   }
 }
 
@@ -58,24 +66,26 @@ async function getItemsByQuery() {
              :style="{ backgroundImage: `url(${searchBackground})` }">
 
           <form @submit.prevent="getItemsByQuery()" class="mx-3 w-100">
-            <div class="form-floating mb-3 d-flex">
-              <input v-model="editableSearchData" type="text" class="form-control" id="floatingInput">
+            <div class="form-floating mb-3 input-group d-flex">
+              <input v-model="editableSearchData" type="text" class="form-control rounded-start" id="floatingInput">
               <label v-if="activeSearchOption == 'food'" for="floatingInput">Search for food</label>
               <label v-else-if="activeSearchOption == 'recipes'" for="floatingInput">Search for recipes</label>
               <label v-else for="floatingInput">Search for exercises</label>
-              <div class="text-end">
-                <button class="btn btn-grey h-100 text-light text-shadow" type="submit"
-                        :title="`Search for ${activeSearchOption}`">
-                  Search
-                </button>
-              </div>
+              <button class="btn btn-grey text-light text-shadow" type="submit"
+                      :title="`Search for ${activeSearchOption}`">
+                Search
+              </button>
             </div>
           </form>
           <div class="mt-2">
-            <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Food</button>
-            <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
-                    type="button">Recipes</button>
+            <RouterLink :to="{ query: { type: 'food' } }">
+              <button @click="setActiveSearchOption('food')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Food</button>
+            </RouterLink>
+            <RouterLink :to="{ query: { type: 'recipes' } }">
+              <button @click="setActiveSearchOption('recipes')" class="btn btn-grey text-shadow text-light me-2"
+                      type="button">Recipes</button>
+            </RouterLink>
           </div>
         </div>
       </div>

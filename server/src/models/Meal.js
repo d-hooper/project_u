@@ -6,7 +6,8 @@ export const MealSchema = new Schema(
     name: { type: String, required: true },
     image: { type: String, required: true },
     calorieCount: { type: Number, required: true },
-    unit: { type: String, required: true }
+    unit: { type: String },
+    isRecipe: { type: Boolean, required: true, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

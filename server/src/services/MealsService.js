@@ -25,7 +25,8 @@ class MealsService {
         calorieCount: mealData.calories.amount,
         name: mealData.name,
         image: mealData.image,
-        unit: mealData.unit
+        unit: mealData.unit,
+        isRecipe: mealData.isRecipe
       })
     }
 
