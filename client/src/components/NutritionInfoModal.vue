@@ -43,6 +43,7 @@ async function addFoodToDay(food) {
     else {
       await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value, unit: food.theUnit })
     }
+    Modal.getOrCreateInstance('#NutritionInfoModal').hide()
     Pop.success(`You successfully added ${food.name} to your calorie count!`)
   }
   catch (error) {
@@ -142,17 +143,17 @@ async function addFoodToDay(food) {
               {{ food.cholesterol.unit }}
             </p>
           </div>
-          <div>
+          <div class="text-end">
             <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow">Log
               Food</button>
           </div>
         </div>
+        <div class="modal-footer"></div>
       </div>
       <div v-else class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="NutritionInfoModalLabel"></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
         </div>
         <div class="modal-body">
           <div class="text-center my-5 display-5">

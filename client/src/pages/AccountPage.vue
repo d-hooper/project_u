@@ -83,7 +83,7 @@ async function getDetailsById(mealEntry) {
             <h1>Welcome {{ account.name }}!</h1>
           </div>
           <div class="col-md-6">
-            <div class="d-flex flex-column align-items-center bg-dark text-bg-dark py-4">
+            <div class="d-flex flex-column align-items-center bg-dark text-bg-dark py-4 mb-3">
               <h2>{{ activeDay.day.toDateString() }}</h2>
               <div
                    :class="`cal-goal d-flex justify-content-center align-items-center ${activeDay.dayCaloriesConsumed > activeDay.calorieGoal ? 'border-danger' : 'border-success'}`">
@@ -141,8 +141,8 @@ async function getDetailsById(mealEntry) {
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div v-for="day in days" :key="day.id" class="col-md-3">
-            <div @click="getDayById(day.id)" class="card text-center" role="button">
+          <div v-for="day in days" :key="day.id" class="col-6 col-md-3">
+            <div @click="getDayById(day.id)" class="card text-center mb-3" role="button">
               <div class="day-card d-flex justify-content-center flex-column">
                 <span
                       :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>

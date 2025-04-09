@@ -17,6 +17,7 @@ class MealsService {
   setActiveMealEntryId(mealEntryId) {
     AppState.activeMealEntryId = mealEntryId
   }
+
   async changeServings(mealEntryId, serving) {
     const response = await api.put(`mealDay/${mealEntryId}`, { servings: serving })
     const updatedMealEntry = new MealEntry(response.data)

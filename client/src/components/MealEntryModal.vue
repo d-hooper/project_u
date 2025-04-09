@@ -36,6 +36,7 @@ async function changeServings() {
   try {
     await mealsService.changeServings(mealEntryId.value, serving.value)
     // await daysService.updateDay(day.value.id)
+    Modal.getOrCreateInstance('#MealEntryModal').hide()
   } catch (error) {
     Pop.error(error, `couldn't change the serving amounts`)
     logger.error('nice try. but we cant change the serving amount', error)
@@ -48,9 +49,10 @@ async function deleteEntry() {
       return
     }
     await mealsService.deleteEntry(mealEntryId.value)
+    Modal.getOrCreateInstance('#MealEntryModal').hide()
   } catch (error) {
     Pop.error(error, 'Could not delete meal entry')
-    logger.error('COULD NOT DELETE MEAN ENTRY', error)
+    logger.error('COULD NOT DELETE MEAL ENTRY', error)
   }
 }
 </script>
@@ -62,21 +64,22 @@ async function deleteEntry() {
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-capitalize text-indigo" id="MealEntryModalLabel">{{ food.name }}</h1>
+          <h1 class="modal-title fs-5 text-capitalize text-primary fw-bold" id="MealEntryModalLabel">{{ food.name }}
+          </h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
                   aria-label="Close"></button>
         </div>
         <div class="modal-body pt-0">
           <div class="text-center my-5">
-            <img class="shadow rounded-5 img-fluid" :src="food.image || food.medImageURL" alt="">
+            <img class="img-fluid" :src="food.medImageURL" alt="">
           </div>
-          <div class="fs-4 text-indigo">
-            <div class="d-flex justify-content-between rounded">
-              <p v-if="food.unitLong" class="text-capitalize">{{ }}: 1
+          <div class="fs-4 text-dark">
+            <div class="d-flex justify-content-between rounded text-primary fw-bold">
+              <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong ? `${food.unitLong}` : 'Serving(s)' }}: 1
               </p>
               <p v-else class="text-capitalize border border-indigo rounded px-2">
-                {{ food.unit ? `${food.theUnit + ': 1'}` :
-                  'Serving(s):' }}
+                {{ food.theUnit != undefined ? `${food.theUnit + ': 1'}` : 'Serving(s):'
+                }}
               </p>
               <div class="d-flex gap-2">
                 <span @click="decreaseServingSize()" type="button" title="decrease serving"
