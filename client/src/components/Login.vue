@@ -22,12 +22,12 @@ function logout() {
     </button>
     <div v-else>
       <div class="dropdown">
-        <div role="button" class="bg-dark selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
-          title="open account menu">
-          <div v-if="account?.picture || identity?.picture">
-            <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
-          </div>
+        <div v-if="account?.picture || identity?.picture">
+          <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
         </div>
+        <!-- <div role="button" class="bg-white selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
+             title="open account menu">
+        </div> -->
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" role="menu" title="account menu">
           <div class="list-group">
             <RouterLink :to="{ name: 'Account' }">
