@@ -36,7 +36,7 @@ async function changeServings() {
   try {
     await mealsService.changeServings(mealEntryId.value, serving.value)
     // await daysService.updateDay(day.value.id)
-    Modal.getOrCreateInstance('#MealEntryModal').hide()
+    // Modal.getOrCreateInstance('#MealEntryModal').hide()
   } catch (error) {
     Pop.error(error, `couldn't change the serving amounts`)
     logger.error('nice try. but we cant change the serving amount', error)
@@ -49,7 +49,7 @@ async function deleteEntry() {
       return
     }
     await mealsService.deleteEntry(mealEntryId.value)
-    Modal.getOrCreateInstance('#MealEntryModal').hide()
+    // Modal.getOrCreateInstance('#MealEntryModal').hide()
   } catch (error) {
     Pop.error(error, 'Could not delete meal entry')
     logger.error('COULD NOT DELETE MEAL ENTRY', error)
@@ -67,7 +67,7 @@ async function deleteEntry() {
           <h1 class="modal-title fs-5 text-capitalize text-primary fw-bold" id="MealEntryModalLabel">{{ food.name }}
           </h1>
           <button @click="resetServingSize()" type="button" class="btn-close" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
+            aria-label="Close"></button>
         </div>
         <div class="modal-body pt-0">
           <div class="text-center my-5">
@@ -75,18 +75,22 @@ async function deleteEntry() {
           </div>
           <div class="fs-4 text-dark">
             <div class="d-flex justify-content-between rounded text-primary fw-bold">
-              <p v-if="food.unitLong" class="text-capitalize">{{ food.unitLong ? `${food.unitLong}` : 'Serving(s)' }}: 1
+              <p v-if="food.unitLong && food.unitLong != 'undefined'" class="text-capitalize">{{
+                food.unitLong ?
+                  `${food.unitLong}` : 'Serving' }}<span class="text-lowercase">(s)</span>
               </p>
-              <p v-else class="text-capitalize border border-indigo rounded px-2">
-                {{ food.theUnit != undefined ? `${food.theUnit + ': 1'}` : 'Serving(s):'
-                }}
+              <p v-else-if="food.unit == '' || !food.unit" class="text-capitalize rounded px-2">
+                Serving<span class="text-lowercase">(s)</span>
+              </p>
+              <p v-else class="text-capitalize rounded px-2">
+                {{ food.theUnit != undefined ? `${food.theUnit}` : 'Serving' }}<span class="text-lowercase">(s)</span>
               </p>
               <div class="d-flex gap-2">
                 <span @click="decreaseServingSize()" type="button" title="decrease serving"
-                      class="mdi mdi-minus-circle"></span>
+                  class="mdi mdi-minus-circle"></span>
                 <p>{{ serving }}</p>
                 <span @click="increaseServingSize()" type="button" title="increase serving"
-                      class="mdi mdi-plus-circle"></span>
+                  class="mdi mdi-plus-circle"></span>
               </div>
             </div>
             <p v-if="food.calories && food.calories.amount > 1" class="border border-indigo rounded ps-2">
@@ -148,10 +152,10 @@ async function deleteEntry() {
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button @click="deleteEntry()" type="button" title="Delete meal entry" class="btn btn-danger text-light"
-                  data-bs-dismiss="modal">Delete</button>
+            data-bs-dismiss="modal">Delete</button>
 
           <button @click="changeServings()" type="button" class="btn btn-primary text-light"
-                  data-bs-dismiss="modal">Save
+            data-bs-dismiss="modal">Save
             Changes</button>
         </div>
       </div>

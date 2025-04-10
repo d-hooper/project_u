@@ -6,11 +6,11 @@ import { daysService } from "../services/DaysService.js";
 
 export class MealEntriesController extends BaseController {
   constructor() {
+    // TODO fix this
     super('mealDay')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('/entry', this.addEntryToDay)
-      .post('', this.addKnownEntry)
+      .post('', this.addEntryToDay)
       .delete('/:entryId', this.deleteEntry)
       .put('/:entryId', this.changeServings)
   }
@@ -26,20 +26,6 @@ export class MealEntriesController extends BaseController {
 
       response.send(entry)
     } catch (error) {
-      next(error)
-    }
-  }
-
-  async addKnownEntry(req, res, next) {
-    try {
-      // check body for mealId; 
-      // if no mealId, spoonacular Id should be there; or fail if not
-      // add new meal to Id 
-      const mealData = req.body
-
-      res.send('NOT HERE')
-    }
-    catch (error) {
       next(error)
     }
   }

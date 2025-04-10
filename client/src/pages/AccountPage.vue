@@ -102,7 +102,7 @@ async function getFavoriteMeals() {
             <div class="d-flex flex-column align-items-center bg-dark text-bg-dark py-4 mb-3">
               <h2>{{ activeDay.day.toDateString() }}</h2>
               <div
-                   :class="`cal-goal d-flex justify-content-center align-items-center ${activeDay.dayCaloriesConsumed > activeDay.calorieGoal ? 'border-danger' : 'border-success'}`">
+                :class="`cal-goal d-flex justify-content-center align-items-center ${activeDay.dayCaloriesConsumed > activeDay.calorieGoal ? 'border-danger' : 'border-success'}`">
                 <p class="mb-0 display-5 text-center">{{ activeDay.dayCaloriesConsumed }} / {{ activeDay.calorieGoal }}
                 </p>
               </div>
@@ -121,8 +121,8 @@ async function getFavoriteMeals() {
                 </thead>
                 <tbody v-if="mealEntries">
                   <tr v-for="mealEntry in mealEntries" @click="getDetailsById(mealEntry)" :key="mealEntry.id"
-                      role="button" :title="`View or edit meal entry for ${mealEntry.meal.name}`" data-bs-toggle="modal"
-                      data-bs-target="#MealEntryModal">
+                    role="button" :title="`View or edit meal entry for ${mealEntry.meal.name}`" data-bs-toggle="modal"
+                    data-bs-target="#MealEntryModal">
                     <th scope="row" class="text-capitalize">
                       <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
                       {{ mealEntry.meal.name }}
@@ -161,7 +161,7 @@ async function getFavoriteMeals() {
             <div @click="getDayById(day.id)" class="card text-center mb-3" role="button">
               <div class="day-card d-flex justify-content-center flex-column">
                 <span
-                      :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>
+                  :class="`display-4 mdi ${day.dayCaloriesConsumed > day.calorieGoal ? 'mdi-exclamation text-warning' : 'mdi-check text-success'}`"></span>
                 <div>
                   <p class="mb-0 fs-3">{{ day.day.toLocaleDateString() }}</p>
                 </div>
@@ -185,7 +185,7 @@ async function getFavoriteMeals() {
 
       <div v-for="meal in favoriteMeals" :key="meal.id" class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
 
-        <FavoriteMealCard :meals="meal" />
+        <FavoriteMealCard :meal="meal" />
 
       </div>
 

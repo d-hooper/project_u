@@ -44,6 +44,7 @@ export class Meal {
 export class ActiveMeal extends Meal {
   constructor(data) {
     super(data)
+    this.spoonacularMealId = data.id
     this.category = data.categoryPath
     this.calories = data.nutrition.nutrients.find(object => object.name == 'Calories')
     this.carbohydrates = data.nutrition.nutrients.find(object => object.name == 'Carbohydrates')
