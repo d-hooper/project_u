@@ -9,6 +9,11 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+  async checkForFavoriteById(food) {
+    const response = await api.get(`favorites/${food.id}`)
+    logger.log('found a favorite food matching', response.data)
+    AppState.activeFood.isFavorited = !!response.data
+  }
   async deleteFavoriteMeal(meal) {
     const response = await api.delete(`favorites/${meal.id}`)
     logger.log(response.data)
