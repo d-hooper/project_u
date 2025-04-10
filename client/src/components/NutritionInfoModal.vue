@@ -42,7 +42,7 @@ async function addFoodToFavorites(food) {
     //   })
     // }
     await mealsService.addFoodToFavorites({ ...food, spoonacularMealId: food.spoonacularMealId, servings: serving.value, unit: food.theUnit, calorieCount: food.calories.amount })
-    // Modal.getOrCreateInstance('#NutritionInfoModal').hide()
+    Modal.getOrCreateInstance('#NutritionInfoModal').hide()
     Pop.success(`You successfully added ${food.name} to your favorites!`)
 
   }
@@ -65,7 +65,7 @@ async function addFoodToDay(food) {
     else {
       await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value, unit: food.theUnit })
     }
-    // Modal.getOrCreateInstance('#NutritionInfoModal').hide()
+    Modal.getOrCreateInstance('#NutritionInfoModal').hide()
     Pop.success(`You successfully added ${food.name} to your calorie count!`)
   }
   catch (error) {
