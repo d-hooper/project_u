@@ -9,6 +9,9 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+  resetSearchResults() {
+    AppState.searchedFoods = []
+  }
   async addFoodToFavorites(food) {
     const response = await api.post('favorites/meal', food)
     // { spoonacularMealId: food.id, name: food.name, image: food.image, calorieCount: food.calorieCount }

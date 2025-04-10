@@ -25,7 +25,7 @@ function logout() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-white border-bottom border-primary border-3">
+  <nav class="navbar navbar-expand-md bg-white border-bottom border-primary border-3 shadow-lg">
     <div class="container-fluid gap-2">
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center  text-light">
         <span class="mdi mdi-arm-flex text-primary text-shadow display-4"></span>
