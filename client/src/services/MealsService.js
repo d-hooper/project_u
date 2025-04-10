@@ -9,6 +9,12 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+  async deleteFavoriteMeal(meal) {
+    const response = await api.delete(`favorites/${meal.id}`)
+    logger.log(response.data)
+    const mealIndex = AppState.favoriteMeals.findIndex(favoriteMeal => favoriteMeal.id == meal.id)
+    AppState.favoriteMeals.splice(mealIndex, 1)
+  }
   async addFoodToFavorites(food) {
     const response = await api.post('favorites/meal', food)
     // { spoonacularMealId: food.id, name: food.name, image: food.image, calorieCount: food.calorieCount }

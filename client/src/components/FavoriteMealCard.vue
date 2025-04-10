@@ -51,20 +51,41 @@ async function addFoodToDay(meal) {
   }
 }
 
+async function deleteFavoriteMeal(meal) {
+  try {
+    const confirm = await Pop.confirm('Are you sure you want to delete this meal from your favorites?', 'If you do, it will be gone for ever', 'yes', 'no')
+    if (!confirm) {
+      return
+    }
+    await mealsService.deleteFavoriteMeal(meal)
+  }
+  catch (error) {
+    Pop.error(error, 'Could not delete favorite meal')
+    logger.error('COULD NOT DELETE FAVORITE MEAL', error)
+  }
+}
+
 </script>
 
 
 <template>
 
-  <div @click="addFoodToDay(meal)" class="card shadow mb-4 d-flex flex-column align-items-center" type="button">
+  <div class="card shadow mb-4 d-flex">
     <div class="d-flex align-items-center justify-content-evenly flex-column">
       <div class="card-body card-image-body">
-        <img :src="`${meal.medImageURL}`" :alt="`A picture of ${meal.name}`" class="food-search-img" role="button">
+        <img :src="`${meal.medImageURL}`" :alt="`A picture of ${meal.name}`" class="food-search-img">
 
       </div>
       <div class="card-body card-title-body d-flex align-items-center justify-content-center">
         <div class="mb-0 text-capitalize text-primary fw-bold fs-4 text-center">{{ meal.name }}</div>
       </div>
+    </div>
+    <div class="d-flex justify-content-between p-3 pt-5">
+      <button @click="deleteFavoriteMeal(meal)" class="btn btn-danger"
+        :title="`Delete ${meal.name} from your favorited meals`">Delete</button>
+      <button @click="addFoodToDay(meal)" class="btn btn-primary text-light"
+        :title="`Delete ${meal.name} from your favorited meals`">Log
+        Food</button>
     </div>
   </div>
 </template>
