@@ -165,18 +165,15 @@ async function addFoodToDay(food) {
               {{ food.cholesterol.unit }}
             </p>
           </div>
-          <div class="text-end">
-            <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow">Log
+          <div class="d-flex justify-content-between">
+            <button @click="addFoodToFavorites(food)" type="button"
+              class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold"> Favorite</button>
+            <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow fw-bold">Log
               Food</button>
           </div>
         </div>
 
-        <div class="modal-footer d-flex justify-content-between">
-          <button @click="addFoodToFavorites(food)" type="button"
-            class="btn btn-primary mdi mdi-heart">Favorite</button>
-          <button @click="addFoodToDay(food)" type="button" class="btn btn-primary">Log
-            Food</button>
-        </div>
+
 
       </div>
       <div v-else class="modal-content">
