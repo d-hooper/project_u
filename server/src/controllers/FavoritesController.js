@@ -9,6 +9,17 @@ export class FavoritesController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('/meal', this.getFavoriteMeal)
       .post('/meal', this.favoriteMeal)
+      .delete('/:mealId', this.deleteFavoriteMeal)
+  }
+  async deleteFavoriteMeal(request, response, next) {
+    try {
+      const userInfo = request.userInfo
+      const mealId = request.params.mealId
+      const message = await mealsService.deleteFavoriteMeal(userInfo, mealId)
+      response.send(message)
+    } catch (error) {
+      next(error)
+    }
   }
   async getFavoriteMeal(request, response, next) {
     try {

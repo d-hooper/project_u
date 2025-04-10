@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import { RouterView } from 'vue-router';
+import ProjectUFooter from './components/ProjectUFooter.vue';
 
 </script>
 
@@ -9,14 +10,11 @@ import { RouterView } from 'vue-router';
     <Navbar />
   </header>
   <main>
-    <RouterView/>
+    <RouterView />
   </main>
   <footer class=" text-center">
-    Made with <i class="mdi mdi-heart text-pink"></i> by CodeWorks
+    <ProjectUFooter />
   </footer>
 </template>
 
-<style lang="scss">
-
-
-</style>
+<style lang="scss"></style>

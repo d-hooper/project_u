@@ -9,22 +9,25 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+
   resetSearchResults() {
     AppState.searchedFoods = []
-  }
+    
   async addFoodToFavorites(food) {
     const response = await api.post('favorites/meal', food)
     // { spoonacularMealId: food.id, name: food.name, image: food.image, calorieCount: food.calorieCount }
     logger.log('favorite meals', response.data)
     AppState.activeFoodServingSize = 1
   }
-  async getFavoriteMeals() {
+  
+    async getFavoriteMeals() {
     const response = await api.get('favorites/meal')
     logger.log(response.data)
     const favorites = response.data.map(pojo => new FavoriteMeal(pojo))
     AppState.favoriteMeals = favorites
   }
-  async deleteEntry(id) {
+  
+    async deleteEntry(id) {
     const response = await api.delete(`mealDay/${id}`)
     logger.log('here is your deleted meal entry', response.data)
     const entryIndex = AppState.mealEntries.findIndex(entry => entry.id == id)
@@ -32,6 +35,13 @@ class MealsService {
   }
   setActiveMealEntryId(mealEntryId) {
     AppState.activeMealEntryId = mealEntryId
+  }
+    
+  async deleteFavoriteMeal(meal) {
+    const response = await api.delete(`favorites/${meal.id}`)
+    logger.log(response.data)
+    const mealIndex = AppState.favoriteMeals.findIndex(favoriteMeal => favoriteMeal.id == meal.id)
+    AppState.favoriteMeals.splice(mealIndex, 1)
   }
 
   async changeServings(mealEntryId, serving) {
@@ -90,9 +100,11 @@ class MealsService {
   async addMealToDay(meal) {
     const response = await api.post(`mealDay`, meal)
     logger.log(response.data)
+    const newMeal = new MealEntry(response.data)
+    AppState.mealEntries.push(newMeal)
     AppState.activeFoodServingSize = 1
   }
-
+    
 }
 
 export const mealsService = new MealsService()

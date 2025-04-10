@@ -4,31 +4,14 @@ import { daysService } from "./DaysService.js"
 import { mealEntriesService } from "./MealEntriesService.js"
 
 class MealsService {
-  // async addFavoriteMealToDay(mealData, userInfo) {
-  //   let meal = await dbContext.Meal.findOne({ spoonacularMealId: mealData.spoonacularMealId })
-
-  //   if (meal == null) {
-  //     meal = await dbContext.Meal.create({
-  //       spoonacularMealId: mealData.spoonacularMealId,
-  //       name: mealData.name,
-  //       image: mealData.image,
-  //       unit: mealData.unit,
-  //       calorieCount: mealData.calorieCount,
-  //       isRecipe: mealData.isRecipe
-  //     })
-  //   }
-
-  //   const day = await daysService.getOrCreateDay(userInfo)
-  //   const entry = await mealEntriesService.createEntry({
-  //     dayId: day.id,
-  //     mealId: meal.id,
-  //     accountId: userInfo.id,
-  //     servings: mealData.servings
-  //   })
-  //   return entry
-
-
-  // }
+  async deleteFavoriteMeal(userInfo, mealId) {
+    const meal = await dbContext.FavoriteMeal.findById(mealId)
+    if (userInfo.id != meal.accountId) {
+      throw new Forbidden('YOU CANNOT DELETE ANOTHER PERSONS FAVORITE MEAL!!!')
+    }
+    await meal.deleteOne()
+    return 'You successfully deleted a favorite meal!'
+  }
   async getFavoriteMeal(userInfo) {
     const meals = await dbContext.FavoriteMeal.find({ accountId: userInfo.id })
     return meals
