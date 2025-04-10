@@ -8,7 +8,7 @@ export class Day {
     this.accountId = data.accountId
     this.journalBody = data.journalBody
     this.mood = data.mood
-    this.mealEntries = data.mealEntry.map(entry => new MealEntry(entry))
+    this.mealEntries = data?.mealEntry.map(entry => new MealEntry(entry))
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
   }
