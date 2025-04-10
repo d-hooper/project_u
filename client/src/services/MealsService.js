@@ -9,6 +9,12 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+  async addFoodToFavorites(food) {
+    const response = await api.post('favorites/meal', food)
+    // { spoonacularMealId: food.id, name: food.name, image: food.image, calorieCount: food.calorieCount }
+    logger.log('favorite meals', response.data)
+    AppState.activeFoodServingSize = 1
+  }
   async getFavoriteMeals() {
     const response = await api.get('favorites/meal')
     logger.log(response.data)
@@ -49,6 +55,9 @@ class MealsService {
 
   async getIngredientDetailsById(id, unit) {
     AppState.activeFood = null
+    if (unit == undefined || unit == 'undefined') {
+      unit = 'serving'
+    }
     const response = await spoonacularApi.get(`food/ingredients/${id}/information?amount=1&unit=${unit}`)
     logger.log('here is your detailed food', response.data)
     const food = new ActiveMeal(response.data)
@@ -76,7 +85,7 @@ class MealsService {
     AppState.activeFoodServingSize++
   }
   async addMealToDay(meal) {
-    const response = await api.post(`mealDay/entry`, meal)
+    const response = await api.post(`mealDay`, meal)
     logger.log(response.data)
     AppState.activeFoodServingSize = 1
   }
