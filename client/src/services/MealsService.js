@@ -15,12 +15,6 @@ class MealsService {
     logger.log('found a favorite food matching', response.data)
     AppState.activeFood.isFavorited = !!response.data
   }
-  async deleteFavoriteMeal(meal) {
-    const response = await api.delete(`favorites/${meal.id}`)
-    logger.log(response.data)
-    const mealIndex = AppState.favoriteMeals.findIndex(favoriteMeal => favoriteMeal.id == meal.id)
-    AppState.favoriteMeals.splice(mealIndex, 1)
-
 
   resetSearchResults() {
     AppState.searchedFoods = []
