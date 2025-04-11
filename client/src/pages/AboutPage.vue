@@ -10,15 +10,16 @@
     <section class="container">
       <div class="row">
         <div class="col-12">
-          <div class="d-flex align-items-center mb-0 gap-3">
+          <div class="d-flex align-items-center mb-0 gap-3 bg-light rounded-4 p-2">
             <span class="mdi mdi-circle text-primary"></span>
             <p class="fs-4">
               Our names are Dallin Hooper, Roman Olsen, and Roman Wernsing.
             </p>
           </div>
+          <br>
         </div>
         <div class="col-12">
-          <div class="d-flex mb-0 gap-3">
+          <div class="d-flex mb-0 gap-3 bg-light rounded-4 p-2">
             <span class="mdi mdi-minus text-primary"></span>
             <p class="fs-5 mb-0">
               Project U is a fitness tracking and calorie counting app that utilizes a database of different foods and
@@ -31,7 +32,7 @@
           <br>
         </div>
         <div class="col-12">
-          <div class="d-flex mb-0 gap-3">
+          <div class="d-flex mb-0 gap-3 bg-light rounded-4 p-2">
             <span class="mdi mdi-minus text-primary"></span>
             <p class="fs-5 mb-0">
               The three of us are students at Boise Codeworks and this project is the first project that we've all
@@ -41,7 +42,7 @@
           <br>
         </div>
         <div class="col-12">
-          <div class="d-flex mb-0 gap-3">
+          <div class="d-flex mb-0 gap-3 bg-light rounded-4 p-2">
             <span class="mdi mdi-minus text-primary"></span>
             <p class="fs-5 mb-0">
               We all had a lot of fun working on it and learned how difficult, but rewarding building a full stack
@@ -51,7 +52,7 @@
           <br>
         </div>
         <div class="col-12">
-          <div class="d-flex mb-0 gap-3">
+          <div class="d-flex mb-0 gap-3 bg-light rounded-4 p-2">
             <span class="mdi mdi-minus text-primary"></span>
             <p class="fs-5 mb-0">
               We implemented multiple technologies, such as the Spoonacular API, Mongo DB, the Vue front end

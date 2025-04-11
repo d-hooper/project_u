@@ -111,7 +111,7 @@ async function getFavoriteMeals() {
           <div class="col-md-6">
             <div class="meals-eaten pe-2 overflow-y-scroll">
               <h2>Meals Eaten</h2>
-              <table class="table w-100">
+              <table class="table w-100 bg-light">
                 <thead>
                   <tr>
                     <th scope="col">Meal/Item</th>
@@ -124,15 +124,19 @@ async function getFavoriteMeals() {
                     role="button" :title="`View or edit meal entry for ${mealEntry.meal.name}`" data-bs-toggle="modal"
                     data-bs-target="#MealEntryModal">
                     <th scope="row" class="text-capitalize">
-                      <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
-                      {{ mealEntry.meal.name }}
+                      <div class="d-flex align-items-center gap-3">
+                        <img :src="mealEntry.smImageURL" :alt="mealEntry.meal.name" class="table-img">
+                        <p class="mb-0">
+                          {{ mealEntry.meal.name }}
+                        </p>
+                      </div>
                     </th>
                     <td>
                       <span class="serving-number">
                         {{ mealEntry.servings }}
                       </span>
                     </td>
-                    <td>{{ mealEntry.meal.calorieCount * mealEntry.servings }}</td>
+                    <td>{{ (mealEntry.meal.calorieCount * mealEntry.servings).toFixed() }}</td>
 
                   </tr>
                 </tbody>

@@ -33,12 +33,12 @@ function logout() {
       </RouterLink>
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
-              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="mdi mdi-menu text-dark"></span>
       </button>
       <!-- collapsing menu -->
       <div class="collapse navbar-collapse d-md-flex align-items-start align-items-md-center justify-content-md-between"
-           id="navbar-links">
+        id="navbar-links">
         <ul class="navbar-nav">
           <li>
             <RouterLink :to="{ name: 'About' }" class="btn text-primary fw-bold selectable">
@@ -48,6 +48,11 @@ function logout() {
           <li>
             <RouterLink :to="{ name: 'Account' }" class="btn text-primary fw-bold selectable">
               Meal Tracking
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="{ name: 'AccountSettings' }" class="btn text-primary fw-bold selectable">
+              Account Settings
             </RouterLink>
           </li>
         </ul>
@@ -61,7 +66,7 @@ function logout() {
       </div> -->
         <div v-if="account" class="d-flex gap-2 align-items-center">
           <p class="text-danger rounded list-group-item dropdown-item list-group-item-action selectable py-1 px-3 mb-0"
-             @click="logout">
+            @click="logout">
             <i class="mdi mdi-logout"></i>
             Logout
           </p>

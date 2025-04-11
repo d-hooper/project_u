@@ -46,5 +46,4 @@ export class AccountController extends BaseController {
     }
   }
 
-
 }
