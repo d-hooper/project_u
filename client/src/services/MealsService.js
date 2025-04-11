@@ -9,11 +9,17 @@ import { FavoriteMeal } from "@/models/FavoriteMeal.js"
 
 
 class MealsService {
+  async removeFoodFromFavorites() { // FROM the nutrition info modal fav/unfav button
+    const response = await api.delete(`favorites/${AppState.activeFoodFavoriteId}`)
+    logger.log('food removed from favorites')
+    AppState.activeFoodFavoriteId = ''
+  }
 
   async checkForFavoriteById(food) {
     const response = await api.get(`favorites/${food.id}`)
     logger.log('found a favorite food matching', response.data)
-    AppState.activeFood.isFavorited = !!response.data
+    AppState.activeFoodFavoriteId = response.data.id ?? ''
+
   }
 
   resetSearchResults() {
@@ -25,7 +31,8 @@ class MealsService {
     const response = await api.post('favorites/meal', food)
     // { spoonacularMealId: food.id, name: food.name, image: food.image, calorieCount: food.calorieCount }
     logger.log('favorite meals', response.data)
-    AppState.activeFoodServingSize = 1
+    AppState.activeFoodFavoriteId = response.data.id
+
   }
 
   async getFavoriteMeals() {

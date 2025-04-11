@@ -69,8 +69,9 @@ function resetSearchResults() {
 
 <template>
   <div class="row">
+    <NutritionInfoModal />
     <div class="form-area d-flex flex-column justify-content-center align-items-center shadow p-4"
-         :style="{ backgroundImage: `url(${searchBackground})` }">
+      :style="{ backgroundImage: `url(${searchBackground})` }">
 
       <form @submit.prevent="getItemsByQuery()" class="mx-3 w-100">
         <div class="form-floating mb-3 input-group text-center text-dark">
@@ -78,10 +79,10 @@ function resetSearchResults() {
           <label v-if="activeSearchOption == 'food'" for="floatingInput" class="text-primary fw-bold fs-5">Search for
             food</label>
           <label v-else-if="activeSearchOption == 'recipes'" for="floatingInput"
-                 class="text-primary fw-bold fs-5">Search
+            class="text-primary fw-bold fs-5">Search
             for recipes</label>
           <label v-else-if="activeSearchOption == 'exercises'" for="floatingInput"
-                 class="text-primary fw-bold fs-5">Search
+            class="text-primary fw-bold fs-5">Search
             for exercises</label>
           <button class="btn btn-grey text-light text-shadow" type="submit" :title="`Search for ${activeSearchOption}`">
             Search
@@ -91,13 +92,13 @@ function resetSearchResults() {
       <div class="mt-2">
         <RouterLink :to="{ query: { type: 'food' } }">
           <button @click="setActiveSearchOption('food')"
-                  :class="`btn btn-grey text-shadow text-light me-2 ${route.query.type == 'food' ? 'border-bottom border-primary border-3' : ''}`"
-                  type="button">Food</button>
+            :class="`btn btn-grey text-shadow text-light me-2 ${route.query.type == 'food' ? 'border-bottom border-primary border-3' : ''}`"
+            type="button">Food</button>
         </RouterLink>
         <RouterLink :to="{ query: { type: 'recipes' } }">
           <button @click="setActiveSearchOption('recipes')"
-                  :class="`btn btn-grey text-shadow text-light me-2 ${route.query.type == 'recipes' ? 'border-bottom border-primary border-3' : ''}`"
-                  type="button">Recipes</button>
+            :class="`btn btn-grey text-shadow text-light me-2 ${route.query.type == 'recipes' ? 'border-bottom border-primary border-3' : ''}`"
+            type="button">Recipes</button>
         </RouterLink>
       </div>
     </div>
@@ -112,7 +113,7 @@ function resetSearchResults() {
         <div class="d-flex gap-2 align-items-center mb-1
         ">
           <span @click="resetSearchResults" class="mdi mdi-close-thick fs-2 text-danger" role="button"
-                title="Clear search results"></span>
+            title="Clear search results"></span>
           <h2 class="mb-0">Showing results for "{{ searchResults }}"</h2>
         </div>
       </div>
@@ -122,8 +123,6 @@ function resetSearchResults() {
       </div>
     </div>
   </section>
-  <NutritionInfoModal />
-
 </template>
 
 <style scoped lang="scss">
