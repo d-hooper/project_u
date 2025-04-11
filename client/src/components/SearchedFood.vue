@@ -3,7 +3,6 @@ import { Meal } from '@/models/Meal.js';
 import { mealsService } from '@/services/MealsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import NutritionInfoModal from './NutritionInfoModal.vue';
 import { computed } from 'vue';
 import { AppState } from '@/AppState.js';
 

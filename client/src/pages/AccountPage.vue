@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { Pop } from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
@@ -10,6 +10,7 @@ import SearchedFood from '@/components/SearchedFood.vue';
 import { FavoriteMeal } from '@/models/FavoriteMeal.js';
 import FavoriteMeals from '@/components/FavoriteMealCard.vue';
 import FavoriteMealCard from '@/components/FavoriteMealCard.vue';
+import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 
 const account = computed(() => AppState.account)
 const activeDay = computed(() => AppState.activeDay)
