@@ -95,6 +95,7 @@ async function addFoodToDay(food) {
               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
           </div>
           <div class="fs-4 text-dark">
+            <span v-if="food.isFavorited" class="mdi mdi-heart text-pink"></span>
             <div
               class="d-flex justify-content-between rounded text-capitalize rounded border-primary text-primary fw-bold">
               <p v-if="food.unitLong">{{ food.unitLong
@@ -166,8 +167,10 @@ async function addFoodToDay(food) {
             </p>
           </div>
           <div class="d-flex justify-content-between">
-            <button @click="addFoodToFavorites(food)" type="button"
+            <button v-if="!food.isFavorited" @click="addFoodToFavorites(food)" type="button"
               class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold"> Favorite</button>
+            <button v-else class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold" disabled>
+              Favorited!</button>
             <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow fw-bold">Log
               Food</button>
           </div>

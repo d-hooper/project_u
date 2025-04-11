@@ -8,7 +8,6 @@ export class Meal {
     this.possibleUnits = data.possibleUnits
     this.isRecipe = data.isRecipe
     // this.calories = data.nutrition.nutrients.amount
-
   }
   imageBaseUrl = 'https://img.spoonacular.com/ingredients'
 
@@ -44,6 +43,7 @@ export class Meal {
 export class ActiveMeal extends Meal {
   constructor(data) {
     super(data)
+    // this.isFavorited = data.isFavorited
     this.spoonacularMealId = data.id
     this.category = data.categoryPath
     this.calories = data.nutrition.nutrients.find(object => object.name == 'Calories')
@@ -60,6 +60,7 @@ export class ActiveMeal extends Meal {
     this.unitLong = data.unitLong
     this.unit = data.unit
   }
+  isFavorited = false
 }
 export class Recipe extends ActiveMeal {
   constructor(data) {

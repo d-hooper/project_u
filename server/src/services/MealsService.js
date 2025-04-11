@@ -4,6 +4,10 @@ import { daysService } from "./DaysService.js"
 import { mealEntriesService } from "./MealEntriesService.js"
 
 class MealsService {
+  async getFavoriteById(mealId, userInfo) {
+    const meal = await dbContext.FavoriteMeal.findOne({ accountId: userInfo.id, spoonacularMealId: mealId })
+    return meal
+  }
   async deleteFavoriteMeal(userInfo, mealId) {
     const meal = await dbContext.FavoriteMeal.findById(mealId)
     if (userInfo.id != meal.accountId) {

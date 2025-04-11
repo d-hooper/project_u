@@ -10,6 +10,17 @@ export class FavoritesController extends BaseController {
       .get('/meal', this.getFavoriteMeal)
       .post('/meal', this.favoriteMeal)
       .delete('/:mealId', this.deleteFavoriteMeal)
+      .get('/:mealId', this.getFavoriteById)
+  }
+  async getFavoriteById(request, response, next) {
+    try {
+      const userInfo = request.userInfo
+      const mealId = request.params.mealId
+      const meal = await mealsService.getFavoriteById(mealId, userInfo)
+      response.send(meal)
+    } catch (error) {
+      next(error)
+    }
   }
   async deleteFavoriteMeal(request, response, next) {
     try {

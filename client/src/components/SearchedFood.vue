@@ -15,11 +15,28 @@ defineProps({
 
 async function getDetailsById(food) {
   try {
+
+
+
     if (!food.possibleUnits) {
       await mealsService.getRecipeDetailsById(food)
+
+      try {
+        await mealsService.checkForFavoriteById(food)
+      } catch (error) {
+        Pop.error(error, 'Couldnt check if favorited')
+      }
+
       return
     }
     await mealsService.getIngredientDetailsById(food.id, food.theUnit)
+
+    try {
+      await mealsService.checkForFavoriteById(food)
+    } catch (error) {
+      Pop.error(error, 'Couldnt check if favorited')
+    }
+
   }
   catch (error) {
     Pop.error(error, 'Could not get food details')
