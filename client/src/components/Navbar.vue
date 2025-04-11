@@ -45,12 +45,12 @@ function logout() {
               About
             </RouterLink>
           </li>
-          <li>
+          <li v-if="account">
             <RouterLink :to="{ name: 'Account' }" class="btn text-primary fw-bold selectable">
               Meal Tracking
             </RouterLink>
           </li>
-          <li>
+          <li v-if="account">
             <RouterLink :to="{ name: 'AccountSettings' }" class="btn text-primary fw-bold selectable">
               Account Settings
             </RouterLink>
