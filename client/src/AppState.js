@@ -19,6 +19,7 @@ export const AppState = reactive({
   mealEntries: [],
   activeMealEntryId: null,
   /** @type {import('./models/FavoriteMeal.js').FavoriteMeal[]} user info from the database*/
-  favoriteMeals: []
+  favoriteMeals: [],
+  activeFoodFavoriteId: null
 })
 

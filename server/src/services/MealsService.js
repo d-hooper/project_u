@@ -9,7 +9,9 @@ class MealsService {
     return meal
   }
   async deleteFavoriteMeal(userInfo, mealId) {
+
     const meal = await dbContext.FavoriteMeal.findById(mealId)
+
     if (userInfo.id != meal.accountId) {
       throw new Forbidden('YOU CANNOT DELETE ANOTHER PERSONS FAVORITE MEAL!!!')
     }

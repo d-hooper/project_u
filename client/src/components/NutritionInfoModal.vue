@@ -9,8 +9,8 @@ import { computed, onMounted, ref, } from 'vue';
 
 
 const food = computed(() => AppState.activeFood)
-
 const serving = computed(() => AppState.activeFoodServingSize)
+const activeFavorite = computed(() => AppState.activeFoodFavoriteId)
 
 onMounted(() => {
   const myModalId = document.getElementById('NutritionInfoModal')
@@ -33,22 +33,23 @@ function resetServingSize() {
 
 async function addFoodToFavorites(food) {
   try {
-    // if (!food.unit) {
-    //   await mealsService.addMealToDay({
-    //     ...food,
-    //     spoonacularMealId: food.id,
-    //     servings: serving.value,
-    //     isRecipe: food.isRecipe
-    //   })
-    // }
+
     await mealsService.addFoodToFavorites({ ...food, spoonacularMealId: food.spoonacularMealId, servings: serving.value, unit: food.theUnit, calorieCount: food.calories.amount })
-    Modal.getOrCreateInstance('#NutritionInfoModal').hide()
-    Pop.success(`You successfully added ${food.name} to your favorites!`)
+    // Pop.success(`You successfully added ${food.name} to your favorites!`)
 
   }
   catch (error) {
     Pop.error(error, 'could not favorite this food');
     logger.log('could not favorite food', error)
+  }
+}
+
+async function removeFoodFromFavorites() {
+  try {
+    await mealsService.removeFoodFromFavorites()
+  }
+  catch (error) {
+    Pop.error(error, 'could not unfavorite');
   }
 }
 
@@ -65,7 +66,6 @@ async function addFoodToDay(food) {
     else {
       await mealsService.addMealToDay({ ...food, spoonacularMealId: food.id, servings: serving.value, unit: food.theUnit })
     }
-    Modal.getOrCreateInstance('#NutritionInfoModal').hide()
     Pop.success(`You successfully added ${food.name} to your calorie count!`)
   }
   catch (error) {
@@ -79,8 +79,7 @@ async function addFoodToDay(food) {
 
 <template>
   <!-- inert? -->
-  <div class="modal fade" id="NutritionInfoModal" tabindex="-1" aria-labelledby="NutritionInfoModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="NutritionInfoModal" tabindex="-1" key="nutrition-modal">
     <div class="modal-dialog">
       <div v-if="food" class="modal-content">
         <div class="modal-header">
@@ -95,7 +94,7 @@ async function addFoodToDay(food) {
               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
           </div>
           <div class="fs-4 text-dark">
-            <span v-if="food.isFavorited" class="mdi mdi-heart text-pink"></span>
+            <span v-if="activeFavorite" class="mdi mdi-heart text-pink"></span>
             <div
               class="d-flex justify-content-between rounded text-capitalize rounded border-primary text-primary fw-bold">
               <p v-if="food.unitLong">{{ food.unitLong
@@ -167,11 +166,14 @@ async function addFoodToDay(food) {
             </p>
           </div>
           <div class="d-flex justify-content-between">
-            <button v-if="!food.isFavorited" @click="addFoodToFavorites(food)" type="button"
-              class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold"> Favorite</button>
-            <button v-else class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold" disabled>
-              Favorited!</button>
-            <button @click="addFoodToDay(food)" type="button" class="btn btn-primary text-light text-shadow fw-bold">Log
+            <button v-if="!activeFavorite" @click="addFoodToFavorites(food)" type="button"
+              class="btn btn-primary mdi mdi-heart text-light text-shadow fw-bold">
+              Favorite</button>
+            <button v-else @click="removeFoodFromFavorites()"
+              class="btn btn-primary mdi mdi-heart-broken text-light text-shadow fw-bold" type="button">
+              Unfavorite</button>
+            <button @click="addFoodToDay(food)" data-bs-dismiss="modal" type="button"
+              class="btn btn-primary text-light text-shadow fw-bold">Log
               Food</button>
           </div>
         </div>
