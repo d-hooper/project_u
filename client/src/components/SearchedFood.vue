@@ -7,6 +7,7 @@ import { computed } from 'vue';
 import { AppState } from '@/AppState.js';
 
 const activeFood = computed(() => AppState.activeFood)
+const identity = computed(() => AppState.identity)
 
 defineProps({
   food: { type: Meal, required: true }
@@ -20,20 +21,26 @@ async function getDetailsById(food) {
     if (!food.possibleUnits) {
       await mealsService.getRecipeDetailsById(food)
 
-      try {
-        await mealsService.checkForFavoriteById(food)
-      } catch (error) {
-        Pop.error(error, 'Couldnt check if favorited')
+      if (identity.value != null) {
+
+        try {
+          await mealsService.checkForFavoriteById(food)
+        } catch (error) {
+          Pop.error(error, 'Couldn\'t check if favorited')
+        }
       }
 
       return
     }
     await mealsService.getIngredientDetailsById(food.id, food.theUnit)
 
-    try {
-      await mealsService.checkForFavoriteById(food)
-    } catch (error) {
-      Pop.error(error, 'Couldnt check if favorited')
+    if (identity.value != null) {
+
+      try {
+        await mealsService.checkForFavoriteById(food)
+      } catch (error) {
+        Pop.error(error, 'Couldn\'t check if favorited')
+      }
     }
 
   }
@@ -47,23 +54,23 @@ async function getDetailsById(food) {
 
 <template>
   <div @click="getDetailsById(food)" class="card shadow mb-4 d-flex flex-column align-items-center"
-    data-bs-toggle="modal" data-bs-target="#NutritionInfoModal" type="button">
+       data-bs-toggle="modal" data-bs-target="#NutritionInfoModal" type="button">
     <div class="d-flex align-items-center justify-content-evenly flex-column">
       <div class="card-body card-image-body">
         <img v-if="food.possibleUnits" :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`"
-          class="food-search-img" role="button"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
+             class="food-search-img" role="button"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
 
         <img v-else :src="`${food.medImageURL}`" :alt="`A picture of ${food.name}`" class="recipe-search-img"
-          role="button"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
+             role="button"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Placeholder-image.png?20150323180114'">
 
       </div>
       <div class="card-body card-title-body d-flex align-items-center justify-content-center">
         <div v-if="food.name.length < 25" class="text-capitalize text-primary fw-bold fs-4 text-center pb-3">{{
           food.name }}</div>
         <div v-else-if="food.name.length < 35"
-          class="mb-0 text-capitalize text-primary fw-bold fs-5 text-center pb-4 px-2">
+             class="mb-0 text-capitalize text-primary fw-bold fs-5 text-center pb-4 px-2">
           {{ food.name }}</div>
         <div v-else class="mb-0 text-capitalize text-primary fw-bold text-center pb-4 px-2">{{ food.name }}</div>
 
